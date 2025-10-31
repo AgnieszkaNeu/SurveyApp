@@ -1,8 +1,9 @@
 import uuid
 
 from pydantic import EmailStr
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
 from datetime import datetime
+from .survey import Survey
 
 class UserBase(SQLModel):
     email: EmailStr = Field(unique = True, index = True, max_length=255)
@@ -19,3 +20,5 @@ class User(UserBase, table = True):
     hashed_password: str
     created_at: datetime
     is_active: bool
+
+    surveys: list['Survey'] = Relationship(back_populates="user")
