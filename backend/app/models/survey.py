@@ -22,3 +22,4 @@ class Survey(SurveyBase, table = True):
 
     user_id: uuid.UUID = Field(foreign_key="user.id")
     user: User = Relationship(back_populates="surveys")  
+    
