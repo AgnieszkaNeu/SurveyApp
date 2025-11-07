@@ -1,15 +1,55 @@
 import pytest
 from collections.abc import Generator
 from sqlmodel import SQLModel, create_engine, Session
+from .utils.data import make_survey_test, make_user_test
+from app.models.user import User
+from fastapi.testclient import TestClient
+from app.main import app
+from app.core.db import get_session
+from sqlalchemy.pool import StaticPool
 
 @pytest.fixture(scope="session")
 def engine():
-    engine = create_engine("sqlite:///:memory:", connect_args={"check_same_thread": False})
-    SQLModel.metadata.create_all(engine)
+    engine = create_engine("sqlite:///:memory:",
+                           connect_args={"check_same_thread": False},
+                           poolclass=StaticPool
+                           )
     return engine
 
+
 @pytest.fixture()
-def session(engine) -> Generator[Session, None, None]:
+def prepare_db(engine):
+    import app.core.db as core_db
+    core_db.engine = engine 
+    SQLModel.metadata.drop_all(engine)
+    SQLModel.metadata.create_all(engine)
+    yield 
+    SQLModel.metadata.drop_all(engine)
+
+
+
+@pytest.fixture()
+def session(engine, prepare_db) -> Generator[Session, None, None]:
     with Session(engine) as session:
         yield session
-        session.rollback()
+
+
+@pytest.fixture()
+def test_client(session: Session):
+    def override_get_session():
+        yield session
+    
+    app.dependency_overrides[get_session] = override_get_session
+    client = TestClient(app)
+    yield client
+    app.dependency_overrides.clear()
+
+
+@pytest.fixture()
+def insert_data(session):
+    user = make_user_test()
+    survey = make_survey_test(user)
+
+    session.add(user)
+    session.add(survey)
+    session.commit()

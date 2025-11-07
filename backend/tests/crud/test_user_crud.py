@@ -1,17 +1,21 @@
 import uuid
 
-from ..utils.utils import random_email, random_lower_string, random_string
-from ..utils.utils import email,password,userCreate
+from ..utils.utils import random_email, random_string
+from ..utils.data import email
 from app.logic.user_crud import *
-from app.models.survey import Survey
 from app.models.user import User, UserCreate
 from app.core.password_utils import verify_password
 
+
 def test_create_user(session):
+    email_rand = random_email()
+    password_rand = random_string()
+    userCreate = UserCreate(email=email_rand, password = password_rand)
+
     user = create_user(session, userCreate)
 
-    assert user.email==email
-    assert verify_password(password, user.hashed_password)
+    assert user.email==email_rand
+    assert verify_password(password_rand, user.hashed_password)
     assert user.role=="user"
     assert hasattr(user,"id")
     assert hasattr(user,"created_at")
@@ -19,20 +23,20 @@ def test_create_user(session):
     assert user.is_active
 
 
-def test_get_user_by_id(session):
+def test_get_user_email(session, insert_data):
     user = get_user_by_email(session, email)
-
+    
     assert isinstance(user, User)
     assert user.email==email
 
 
-def test_get_user_by_id_return_none(session):
+def test_get_user_by_email_return_none(session):
     user = get_user_by_email(session, random_email())
 
     assert user == None
 
 
-def test_get_users(session):
+def test_get_users(session, insert_data):
     users = get_users(session)
 
     assert isinstance(users, list)
@@ -41,10 +45,15 @@ def test_get_users(session):
 
 
 def test_delete_user(session):
-    user = session.exec(select(User).where(User.email == email)).one()
+    email_rand = random_email()
+    password_rand = random_string()
+    userCreate = UserCreate(email=email_rand, password = password_rand)
+    create_user(session, userCreate)
+
+    user = session.exec(select(User).where(User.email == email_rand)).one()
     delete_user(session, user)
 
-    result = session.exec(select(User).where(User.email == email)).all()
+    result = session.exec(select(User).where(User.email == email_rand)).all()
 
     assert result == []
 
