@@ -4,7 +4,7 @@ from ..models.user import UserCreate, User, UserPublic
 from ..core.password_utils import hash_password
 
 
-def create_user (session: Session, user_create: UserCreate) -> User:
+def create_user (session: Session, user_create: UserCreate) -> User | None:
      user = User.model_validate(
           user_create, 
           update = {
