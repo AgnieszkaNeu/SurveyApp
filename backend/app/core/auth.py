@@ -12,6 +12,9 @@ from ..models.user import User
 from ..logic.user_crud import get_user_by_email
 from ..core.password_utils import verify_password
 from datetime import timedelta, datetime, timezone
+from ..logic.user_crud import get_user_by_id
+
+
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
@@ -26,12 +29,18 @@ async def get_current_user(*, session: Session = Depends(get_session), token: An
             detail="Could not validate credentials",
             headers={"WWW-Authenticate": "Bearer"}
         )
-    user = session.get(User, token_data.sub)
+    user = get_user_by_id(session,token_data.sub)
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     if not user.is_active:
         raise HTTPException(status_code=400, detail="Inactive user")
     return user
+
+
+def get_superuser(*, session: Session = Depends(get_session), user: Annotated[User, Depends(get_current_user)]):
+    if user.role == "superuser":
+        return user
+    raise HTTPException(status_code=403, detail="You do not have permission to access this resource")
 
 
 def authenticate_user(session: Session, email: str, password: str) -> User | None:
@@ -47,4 +56,4 @@ def create_access_token(subject: str, expires_delta: timedelta | None = None):
     else:
         expire = datetime.now(timezone.utc) + timedelta(minutes=15)
     to_encode = {"exp": expire, "sub": str(subject)}
-    return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=[settings.ALGORITHM])
+    return jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
