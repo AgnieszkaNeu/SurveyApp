@@ -1,9 +1,10 @@
 import uuid
 
 from ..utils.utils import random_email, random_string
-from ..utils.data import email
+from ..utils.data import email, survey_name
 from app.logic.user_crud import *
 from app.models.user import User, UserCreate
+from app.models.survey import Survey
 from app.core.password_utils import verify_password
 
 
@@ -40,20 +41,16 @@ def test_get_users(session, insert_data):
     users = get_users(session)
 
     assert isinstance(users, list)
-    assert users[0].email == email
-    assert len(users) == 1
+    assert len(users) > 0
 
 
-def test_delete_user(session):
-    email_rand = random_email()
-    password_rand = random_string()
-    userCreate = UserCreate(email=email_rand, password = password_rand)
-    create_user(session, userCreate)
-
-    user = session.exec(select(User).where(User.email == email_rand)).one()
+def test_delete_user(session, insert_data):
+    user = session.exec(select(User).where(User.email == email)).one()
     delete_user(session, user)
 
-    result = session.exec(select(User).where(User.email == email_rand)).all()
+    user_result = session.exec(select(User).where(User.email == email)).all()
+    survey_result = session.exec(select(Survey).where(Survey.name == survey_name)).all()
 
-    assert result == []
+    assert user_result == []
+    assert survey_result == []
 

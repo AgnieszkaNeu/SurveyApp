@@ -1,7 +1,7 @@
 import pytest
 from collections.abc import Generator
 from sqlmodel import SQLModel, create_engine, Session
-from .utils.data import make_survey_test, make_user_test
+from .utils.data import *
 from app.models.user import User
 from fastapi.testclient import TestClient
 from app.main import app
@@ -47,9 +47,11 @@ def test_client(session: Session):
 
 @pytest.fixture()
 def insert_data(session):
-    user = make_user_test()
-    survey = make_survey_test(user)
+    user = create_user_test()
+    superuser = create_superuser_test()
+    survey = create_survey_test(user)
 
     session.add(user)
+    session.add(superuser)
     session.add(survey)
     session.commit()
