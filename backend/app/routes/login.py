@@ -8,7 +8,9 @@ from ..core.auth import authenticate_user, create_access_token
 from datetime import timedelta
 from ..core.config import settings
 
-router = APIRouter(tags=["login"])
+router = APIRouter(
+    prefix="/login",
+    tags=["login"])
 
 @router.post("/token")
 async def login_for_access_token(*, session: Session = Depends(get_session), form_data: Annotated[OAuth2PasswordRequestForm, Depends()]) -> Token:
