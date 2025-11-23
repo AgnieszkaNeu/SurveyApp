@@ -1,10 +1,10 @@
 from sqlmodel import Session, select
 from datetime import datetime, timezone
-from ..models.user import UserCreate, User, UserPublic, UserUpdate
-from ..core.password_utils import hash_password
+from ...models.user import UserCreate, User, UserPublic, UserUpdate
+from ...core.password_utils import hash_password
 from sqlalchemy.exc import IntegrityError
 import uuid
-from ..core.exceptions import EmailAlreadyExistsException
+from ...core.exceptions import EmailAlreadyExistsException
 
 
 def create_user (session: Session, user_create: UserCreate) -> User | None:
@@ -45,7 +45,7 @@ def get_user_by_id(session: Session, user_id: uuid.UUID) -> User:
      return session.get(User, user_id)
 
 
-def update_user(session: Session, user: User, user_update: UserUpdate):
+def update_user(session: Session, user: User, user_update: UserUpdate) -> User:
      if user_update.email:
           user.email = user_update.email
      if user_update.password:

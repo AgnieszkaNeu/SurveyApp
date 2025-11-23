@@ -2,7 +2,7 @@ import uuid
 
 from ..utils.utils import random_email, random_string
 from ..utils.data import email, survey_name
-from app.logic.user_crud import *
+from backend.app.logic.crud.user_crud import *
 from app.models.user import User, UserCreate
 from app.models.survey import Survey
 from app.core.password_utils import verify_password
