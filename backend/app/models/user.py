@@ -1,12 +1,14 @@
-import uuid
-
 from typing import TYPE_CHECKING
 from pydantic import EmailStr
 from sqlmodel import SQLModel, Field, Relationship
 from datetime import datetime
-from .survey import Survey
 from enum import Enum
 from sqlalchemy import CheckConstraint
+import uuid
+
+
+if TYPE_CHECKING:
+    from .survey import Survey
 
 
 class Role(str, Enum):

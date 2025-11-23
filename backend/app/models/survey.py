@@ -1,5 +1,4 @@
 import uuid
-
 from sqlmodel import SQLModel, Field, Relationship
 from datetime import datetime
 from typing import TYPE_CHECKING
@@ -24,14 +23,17 @@ class Survey(SurveyBase, table = True):
     last_updated: datetime
     status: str = Field(default="private")
     is_active: bool = Field(default=False)
-
     user_id: uuid.UUID = Field(foreign_key="user.id")
-    user: "User" | None = Relationship(back_populates="surveys") 
 
-    questions: "Question" | None = Relationship(back_populates="survey")
+    user: "User" = Relationship(back_populates="surveys") 
+    questions: list["Question"] = Relationship(
+                                            back_populates="survey",
+                                            sa_relationship_kwargs={"cascade": "all, delete"}
+                                            )
     
 
 class SurveyPublic(SurveyBase):
+    id: uuid.UUID 
     created_at: datetime
     expires_at: datetime
     last_updated: datetime
