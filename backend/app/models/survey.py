@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .user import User
-    from .question import Question
+    from .question import Question, QuestionPublic
 
 
 class SurveyBase(SQLModel):
@@ -39,3 +39,5 @@ class SurveyPublic(SurveyBase):
     last_updated: datetime
     status: str
     is_active: bool
+
+    questions: list["QuestionPublic"]
