@@ -1,7 +1,6 @@
 from sqlmodel import Session, select
-from ...models.survey import Survey, SurveyCreate
+from ...models.survey import Survey
 from sqlalchemy.orm import selectinload
-from datetime import datetime, timezone, timedelta
 import uuid
 
 def get_survey_by_id(session: Session, survey_id: uuid.UUID) -> Survey:
@@ -11,27 +10,7 @@ def get_survey_by_id(session: Session, survey_id: uuid.UUID) -> Survey:
         .options(selectinload(Survey.questions))).one()
 
 
-def create_survey(session: Session, 
-                  survey_create: SurveyCreate, 
-                  user_id: uuid.UUID
-                  ) -> Survey:
-    
-    if survey_create.expires_delta:
-        expire = datetime.now(timezone.utc) + timedelta(minutes=survey_create.expires_delta)
-    else:
-        expire = datetime.now(timezone.utc) + timedelta(days=30)
-
-    survey = Survey()
-    survey = Survey.model_validate(
-        survey_create,
-        update= {
-            "created_at": datetime.now(timezone.utc),
-            "expires_at": expire,
-            "last_updated": datetime.now(timezone.utc),
-            "user_id": user_id
-        }
-    )
-    
+def create_survey(session: Session, survey: Survey) -> Survey:
     session.add(survey)
     return survey
 

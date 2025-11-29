@@ -8,8 +8,7 @@ def get_question_by_id(session: Session, question_id: uuid.UUID) -> Question | N
     return session.get(Question, question_id)
 
 
-def create_question(session: Session, question_base: QuestionBase, survey_id: uuid.UUID) -> Question:
-    question = Question.model_validate(question_base, update={"survey_id": survey_id})
+def create_question(session: Session, question: QuestionBase) -> Question:
     session.add(question)
     return question
 
