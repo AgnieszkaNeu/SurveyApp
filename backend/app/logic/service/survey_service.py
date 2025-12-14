@@ -30,12 +30,12 @@ def create_survey(*, session: Session, user_id: uuid.UUID, survey_create = Surve
     return new_survey
     
 
-@transactional
+@transactional()
 def get_all_user_surveys(session: Session, user_id: uuid.UUID) -> list[Survey]:
     return survey_crud.get_all_user_surveys(session=session, user_id=user_id)
 
     
-@transactional
+@transactional()
 def get_survey_by_name(session: Session, name: str, user_id = uuid.UUID) -> list[Survey]:
     surveys = survey_crud.get_survey_by_name(session=session, name=name)
     return [survey for survey in surveys if survey.user_id == user_id]

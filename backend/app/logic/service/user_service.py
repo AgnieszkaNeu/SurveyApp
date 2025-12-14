@@ -5,11 +5,11 @@ from ...core.transaction import transactional
 from ...core.password_utils import hash_password
 from datetime import datetime, timezone
 
-@transactional
+@transactional()
 def get_users(session: Session) -> list[User]:
     return user_crud.get_users(session=session)
 
-@transactional
+@transactional()
 def create_user(session: Session, user_create: UserCreate):
     user = User.model_validate(
           user_create, 
@@ -23,12 +23,12 @@ def create_user(session: Session, user_create: UserCreate):
     return new_user
 
 
-@transactional
+@transactional()
 def delete_user(session: Session, user: User):
     user_crud.delete_user(session=session, user=user)
 
 
-@transactional
+@transactional()
 def update_user(session: Session, user: User, user_update: UserUpdate):
     if user_update.email:
           user.email = user_update.email

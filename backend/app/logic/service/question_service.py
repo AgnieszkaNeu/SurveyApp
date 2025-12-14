@@ -16,12 +16,12 @@ def check_order_of_questions(questions: list[QuestionCreate]) -> bool:
     return False
     
 
-@transactional
+@transactional()
 def get_all_survey_questions(session: Session, survey_id: uuid.UUID) -> list[Question]:
     return question_crud.get_all_survey_questions(session=session, survey_id=survey_id)
     
     
-@transactional
+@transactional()
 def delete_survey_question(session: Session, question_id: uuid.UUID):
 
     question = question_crud.get_question_by_id(session=session, question_id=question_id)
@@ -32,7 +32,7 @@ def delete_survey_question(session: Session, question_id: uuid.UUID):
     question_crud.delete_question(session=session, question=question)
     
 
-@transactional
+@transactional()
 def delete_exsited(session: Session, survey_id = uuid.UUID): 
     questions = get_all_survey_questions(session=session, survey_id=survey_id)
 
