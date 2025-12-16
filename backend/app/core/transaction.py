@@ -1,5 +1,5 @@
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
-from ..core.exceptions import BaseException, DatabaseError, EmailAlreadyExistsException
+from ..core.exceptions import DatabaseError, EmailAlreadyExistsException, CouldNotCreateResource, NotFoundError
 from functools import wraps
 
 def transactional(refresh_returned_instance: bool = False):
@@ -25,20 +25,25 @@ def transactional(refresh_returned_instance: bool = False):
                                     session.refresh(item)
 
                 return result
+
+            except IntegrityError as e:
+                session.rollback()
+                raise EmailAlreadyExistsException("Email already exists.")    
             
             except SQLAlchemyError as e:
                 if session is not None:
                     session.rollback()
                 raise DatabaseError("Database error") from e
             
-            except Exception as e:
-                if session is not None:
+            except CouldNotCreateResource:
+                if session:
                     session.rollback()
-                raise BaseException("Unexpected error while processing request") from e
+                raise   
             
-            except IntegrityError as e:
-                session.rollback()
-                raise EmailAlreadyExistsException("Email already exists.")
+            except NotFoundError:
+                if session:
+                    session.rollback()
+                raise     
             
         return wrapper
     
