@@ -5,10 +5,10 @@ from typing import TYPE_CHECKING, List
 
 if TYPE_CHECKING:
     from .survey import Survey
-    from .choice import Choice, ChoiceCreate
+    from .choice import Choice, ChoiceCreate, ChoicePublic 
 
 
-class Answer_type(str, Enum):
+class AnswerEnum(str, Enum):
     open = "open"
     close = "close"
     multiple = "multiple"
@@ -17,15 +17,15 @@ class Answer_type(str, Enum):
 class QuestionBase(SQLModel):
     content: str
     position: int
-    answer_type: Answer_type
+    answer_type: AnswerEnum
 
 
 class QuestionCreate(QuestionBase):
-    choices: list["ChoiceCreate"]
+    choices: list["ChoiceCreate"] | None = None
 
 
 class QuestionPublic(QuestionBase):
-    pass
+    choices: list["ChoicePublic"]
 
 
 class Question(QuestionBase, table=True):
