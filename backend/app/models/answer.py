@@ -15,6 +15,10 @@ class AnswerCreate(AnswerBase):
     pass
 
 
+class AnswerPublic(AnswerBase):
+    pass
+
+
 class Answer(AnswerBase, table = True):
     submission_id: uuid.UUID = Field(foreign_key="submission.id", primary_key=True)
 

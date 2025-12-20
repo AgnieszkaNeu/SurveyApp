@@ -47,4 +47,3 @@ def update_survey_last_updated(*, session: Session, survey_id: uuid.UUID):
     survey.last_updated =  datetime.now(timezone.utc)
     return survey
     
-
