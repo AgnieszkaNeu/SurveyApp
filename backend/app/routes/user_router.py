@@ -25,7 +25,7 @@ def get_user(*, user: Annotated[User, Depends(get_current_user)]):
 
 @router.post("/")
 def create_user(*, session: Session = Depends(get_session), user: UserCreate):
-    user_service.create_user(session, user)
+    user_service.create_user(session=session, user_create=user)
 
 
 @router.delete("/")

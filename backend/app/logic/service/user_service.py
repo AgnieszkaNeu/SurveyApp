@@ -6,11 +6,11 @@ from ...core.password_utils import hash_password
 from datetime import datetime, timezone
 
 @transactional()
-def get_users(session: Session) -> list[User]:
+def get_users(*, session: Session) -> list[User]:
     return user_crud.get_users(session=session)
 
 @transactional()
-def create_user(session: Session, user_create: UserCreate):
+def create_user(*, session: Session, user_create: UserCreate):
     user = User.model_validate(
           user_create, 
           update = {
@@ -20,16 +20,18 @@ def create_user(session: Session, user_create: UserCreate):
           )
     
     new_user = user_crud.create_user(session=session, user=user)
+    print("Created user:", new_user)
+    print("session after creation:", session)
     return new_user
 
 
 @transactional()
-def delete_user(session: Session, user: User):
+def delete_user(*, session: Session, user: User):
     user_crud.delete_user(session=session, user=user)
 
 
 @transactional()
-def update_user(session: Session, user: User, user_update: UserUpdate):
+def update_user(*, session: Session, user: User, user_update: UserUpdate):
     if user_update.email:
           user.email = user_update.email
     if user_update.password:
