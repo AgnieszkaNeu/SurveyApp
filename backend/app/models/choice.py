@@ -9,7 +9,7 @@ if TYPE_CHECKING:
 
 class ChoiceBase(SQLModel):
     position: int
-    text: str
+    content: str
 
 
 class ChoiceCreate(ChoiceBase):
