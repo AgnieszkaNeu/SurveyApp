@@ -36,7 +36,8 @@ class User(UserBase, table = True):
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     hashed_password: str
     created_at: datetime
-    is_active: bool = Field(default=True)
+    is_active: bool = Field(default=False)
+    email_confirmed: bool = Field(default=False)
     role: Role = Field(default=Role.user)
 
     surveys: list["Survey"] = Relationship(
@@ -46,5 +47,4 @@ class User(UserBase, table = True):
     
 
 class UserUpdate(SQLModel):
-    email: EmailStr | None = None
     password: str | None = None 
