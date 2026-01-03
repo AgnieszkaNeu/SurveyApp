@@ -1,6 +1,6 @@
 from fastapi.testclient import TestClient
 from ..utils.auth import user_authentication_header
-from app.routes.user_router import *
+from backend.app.api.v1.user import *
 from app.models.survey import Survey
 from ..utils.data import email, password, email_superuser, survey_name
 from sqlmodel import select
