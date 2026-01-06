@@ -22,6 +22,14 @@ Create or open the .env file in .\backend directory and set the required values
 ```bash
 SECRET_KEY = 
 
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+REGION_NAME=
+DOMAIN_MAIL=
+
+API_V1_PREFIX=
+FRONTEND_URL=
+
 POSTGRES_USER=
 POSTGRES_PASSWORD=
 POSTGRES_SERVER=
