@@ -8,21 +8,15 @@ from ...core.auth import create_token
 from ...core.config import settings
 from datetime import timedelta
 from ...models.user import UserUpdate
-
-
 async def initiate_password_reset(*, session: Session, email: str):
     user = get_user_by_email(session=session, email=email)
     if not user:
-        raise NotFoundError("User with this email does not exist")
-    
+        raise NotFoundError("Użytkownik z tym adresem email nie istnieje")
     token = create_token(subject=user.id, expires_delta=timedelta(minutes=settings.PASSWORD_RESET_TOKEN_EXPIRE_MINUTES))
     link = f"{settings.FRONTEND_URL}/auth/reset-password?token={token}"
     send_password_reset_email(to_address=email, reset_link=link)
-
-
 async def complete_password_reset(*, session: Session, token: str, new_password: str):
     token_data = decode_jwt_token(token)
-
     if token_data.sub is not None:
         update_user_entity = UserUpdate(password=new_password)
         user = get_user_by_id(session, token_data.sub)

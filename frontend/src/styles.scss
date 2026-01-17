@@ -1,0 +1,319 @@
+@import "styles/variables";
+@import "bootstrap/scss/bootstrap";
+@import "styles/animations";
+@import "styles/components";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--body-bg);
+  color: var(--body-color);
+  font-family: var(--font-family-base);
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  
+  &.no-scroll {
+    overflow: hidden;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--body-color);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+}
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+  
+  &:hover {
+    color: var(--primary-hover);
+}
+}
+
+.container,
+.container-fluid,
+.container-sm,
+.container-md,
+.container-lg,
+.container-xl,
+.container-xxl {
+  padding-left: 1rem;
+  padding-right: 1rem;
+  
+  @media (min-width: 768px) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.text-muted {
+  color: var(--body-color-secondary) !important;
+}
+
+.text-dark {
+  color: var(--body-color) !important;
+}
+
+.lead {
+  color: var(--body-color-secondary);
+}
+
+.card-text {
+  color: var(--body-color);
+}
+
+.card-title {
+  color: var(--body-color);
+}
+
+small {
+  color: var(--body-color-secondary);
+}
+
+label,
+.form-label {
+  color: var(--body-color);
+}
+
+.form-text {
+  color: var(--body-color-secondary) !important;
+}
+
+.invalid-feedback {
+  color: var(--danger) !important;
+}
+
+.valid-feedback {
+  color: var(--success) !important;
+}
+
+li {
+  color: var(--body-color);
+}
+
+blockquote {
+  color: var(--body-color-secondary);
+  border-left-color: var(--border-color);
+}
+
+code {
+  color: var(--primary);
+  background-color: var(--gray-100);
+}
+
+pre {
+  background-color: var(--gray-100);
+  color: var(--body-color);
+  border: 1px solid var(--border-color);
+}
+
+.table {
+  color: var(--body-color) !important;
+  background-color: transparent;
+  border-color: var(--border-color) !important;
+  
+  thead {
+    th {
+      color: var(--body-color) !important;
+      border-bottom-color: var(--border-color) !important;
+      border-top-color: var(--border-color) !important;
+      background-color: transparent;
+      font-weight: 600;
+    }
+  }
+  
+  tbody {
+    td {
+      color: var(--body-color) !important;
+      border-top-color: var(--border-color) !important;
+      border-bottom-color: var(--border-color) !important;
+      background-color: transparent;
+    }
+    
+    tr {
+      background-color: transparent;
+      border-color: var(--border-color) !important;
+      
+      &:hover {
+        background-color: var(--gray-100) !important;
+        
+        td {
+          color: var(--body-color) !important;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+  
+  th, td {
+    border-color: var(--border-color) !important;
+  }
+}
+
+.table-hover {
+  tbody tr:hover {
+    background-color: var(--gray-100) !important;
+    color: var(--body-color) !important;
+    
+    td {
+      color: var(--body-color) !important;
+    }
+  }
+}
+
+.table-responsive {
+  border-color: var(--border-color);
+}
+
+.badge {
+  &.bg-success {
+    background-color: var(--success) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    
+    [data-theme='dark'] & {
+      border-color: rgba(16, 185, 129, 0.5) !important;
+    }
+  }
+  
+  &.bg-warning {
+    background-color: var(--warning) !important;
+    color: var(--gray-900) !important;
+    border: 1px solid rgba(0, 0, 0, 0.15) !important;
+    
+    [data-theme='dark'] & {
+      color: var(--gray-900) !important;
+      border-color: rgba(245, 158, 11, 0.5) !important;
+    }
+  }
+  
+  &.bg-danger {
+    background-color: var(--danger) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    
+    [data-theme='dark'] & {
+      border-color: rgba(239, 68, 68, 0.5) !important;
+    }
+  }
+  
+  &.bg-primary {
+    background-color: var(--primary) !important;
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    
+    [data-theme='dark'] & {
+      border-color: rgba(79, 70, 229, 0.5) !important;
+    }
+  }
+}
+
+.bg-primary.bg-opacity-10 {
+  background-color: var(--primary-lightest) !important;
+}
+
+.bg-success.bg-opacity-10 {
+  background-color: var(--success-light) !important;
+}
+
+.bg-warning.bg-opacity-10 {
+  background-color: var(--warning-light) !important;
+}
+
+.bg-danger.bg-opacity-10 {
+  background-color: var(--danger-light) !important;
+}
+
+.bg-light {
+  background-color: var(--gray-100) !important;
+  color: var(--body-color) !important;
+  border: 1px solid var(--border-color) !important;
+  
+  [data-theme='dark'] & {
+    background-color: var(--gray-200) !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+strong, b {
+  color: var(--body-color) !important;
+}
+
+p {
+  color: var(--body-color);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  
+  [data-theme='dark'] & {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(51, 65, 85, 0.3);
+  }
+}
+
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+::selection {
+  background-color: var(--primary);
+  color: white;
+}
+
+::-moz-selection {
+  background-color: var(--primary);
+  color: white;
+}
+
+@media print {
+  body {
+    background-color: white;
+    color: black;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+}

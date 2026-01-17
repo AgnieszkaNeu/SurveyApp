@@ -1,0 +1,121 @@
+<div class="privacy-settings-page">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-10">
+        
+        <div class="settings-header mb-5">
+          <h1 class="page-title">Ustawienia Prywatności</h1>
+          <p class="page-description">Zarządzaj swoimi danymi i zgodami.</p>
+        </div>
+
+        <section class="settings-section">
+          <h2 class="section-title">Twoje Zgody</h2>
+          <div class="consent-card" *ngIf="consent">
+            <div class="consent-item">
+              <span class="consent-label">Niezbędne:</span>
+              <span class="consent-value">Zawsze aktywne</span>
+            </div>
+            <div class="consent-item">
+              <span class="consent-label">Funkcjonalne:</span>
+              <span class="consent-value" [class.enabled]="consent.functional">
+                {{ consent.functional ? 'Włączone' : 'Wyłączone' }}
+              </span>
+            </div>
+            <div class="consent-item">
+              <span class="consent-label">Fingerprinting:</span>
+              <span class="consent-value" [class.enabled]="consent.fingerprinting">
+                {{ consent.fingerprinting ? 'Włączone' : 'Wyłączone' }}
+              </span>
+            </div>
+            <div class="consent-item text-muted small">
+              <span class="consent-label">Zgoda udzielona:</span>
+              <span class="consent-value">{{ consent.timestamp | date:'medium' }}</span>
+            </div>
+          </div>
+
+          <div *ngIf="!consent" class="alert alert-warning">
+            Nie udzieliłeś jeszcze zgody. Banner pojawi się przy następnej wizycie.
+          </div>
+
+          <div class="mt-4">
+            <h3 class="subsection-title">Zmień preferencje</h3>
+            <div class="preference-toggle">
+              <label>
+                <input type="checkbox" [(ngModel)]="functionalEnabled">
+                Zgoda na cookies funkcjonalne (preferencje, motyw)
+              </label>
+            </div>
+            <div class="preference-toggle">
+              <label>
+                <input type="checkbox" [(ngModel)]="fingerprintingEnabled">
+                Zgoda na zaawansowane fingerprinting (zapobieganie duplikatom)
+              </label>
+            </div>
+            <div class="mt-3">
+              <button class="btn btn-primary" (click)="savePreferences()">
+                Zapisz preferencje
+              </button>
+              <button class="btn btn-outline-secondary ms-2" (click)="resetConsent()">
+                Zresetuj zgodę
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <h2 class="section-title">Dane lokalne (localStorage)</h2>
+          <div class="storage-info">
+            <p><strong>Rozmiar:</strong> {{ formatBytes(localStorageSize) }}</p>
+            <p><strong>Liczba kluczy:</strong> {{ localStorageItems.length }}</p>
+          </div>
+
+          <div class="storage-items">
+            <div *ngFor="let item of localStorageItems" class="storage-item">
+              <div class="item-info">
+                <strong>{{ item.key }}</strong>
+                <small class="text-muted">{{ item.sizeFormatted }}</small>
+              </div>
+              <button class="btn btn-sm btn-outline-danger" (click)="clearSpecificItem(item.key)">
+                Usuń
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-3">
+            <button class="btn btn-danger" (click)="clearAllData()">
+              Wyczyść wszystkie dane lokalne
+            </button>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <h2 class="section-title">Prawa GDPR</h2>
+          <div class="gdpr-actions">
+            <button class="btn btn-outline-primary" (click)="exportLocalData()">
+              Eksportuj dane lokalne (JSON)
+            </button>
+            <button class="btn btn-outline-primary" (click)="exportUserData()">
+              Eksportuj wszystkie dane z serwera
+            </button>
+            <button class="btn btn-outline-danger" (click)="deleteUserAccount()">
+              Usuń konto i wszystkie dane
+            </button>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <h2 class="section-title">Dokumenty</h2>
+          <div class="document-links">
+            <a routerLink="/polityka-prywatnosci" class="btn btn-outline-secondary">
+              Polityka Prywatności
+            </a>
+            <a routerLink="/" class="btn btn-outline-secondary">
+              Powrót do strony głównej
+            </a>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</div>

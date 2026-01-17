@@ -1,0 +1,315 @@
+:root {
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-dark: #3730a3;
+  --primary-light: #818cf8;
+  --primary-lightest: #eef2ff;
+  
+  --secondary: #64748b;
+  --secondary-hover: #475569;
+  
+  --success: #10b981;
+  --success-hover: #059669;
+  --success-light: #d1fae5;
+  
+  --warning: #f59e0b;
+  --warning-hover: #d97706;
+  --warning-light: #fef3c7;
+  
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+  --danger-light: #fee2e2;
+  
+  --info: #3b82f6;
+  --info-hover: #2563eb;
+  --info-light: #dbeafe;
+  
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  
+  --body-bg: #ffffff;
+  --body-bg-secondary: var(--gray-50);
+  --body-color: var(--gray-900);
+  --body-color-secondary: var(--gray-600);
+  
+  --border-color: var(--gray-300);
+  --border-color-light: var(--gray-200);
+  
+  --card-bg: #ffffff;
+  --card-border: var(--gray-300);
+  --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --card-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  
+  --input-bg: #ffffff;
+  --input-border: var(--gray-300);
+  --input-border-focus: var(--primary);
+  --input-color: var(--gray-900);
+  --input-placeholder: var(--gray-400);
+  --input-disabled-bg: var(--gray-100);
+  
+  --question-bg: var(--gray-50);
+  --question-bg-hover: var(--gray-100);
+  --anonymous-badge-bg: var(--success-light);
+  --anonymous-badge-color: var(--success-hover);
+  
+  --focus-ring: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  --focus-ring-danger: 0 0 0 3px rgba(239, 68, 68, 0.15);
+  
+  --transition-base: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  --border-radius-sm: 0.375rem;
+  --border-radius: 0.5rem;
+  --border-radius-lg: 0.75rem;
+  --border-radius-xl: 1rem;
+  --border-radius-2xl: 1.5rem;
+  --border-radius-full: 9999px;
+  
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  
+  --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-family-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  
+  --navbar-bg: rgba(255, 255, 255, 0.95);
+  --navbar-border: var(--gray-200);
+  --navbar-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --primary: #6366f1;
+  --primary-hover: #818cf8;
+  --primary-dark: #4f46e5;
+  --primary-light: #4f46e5;
+  --primary-lightest: #312e81;
+  
+  --secondary: #94a3b8;
+  --secondary-hover: #cbd5e1;
+  
+  --success: #34d399;
+  --success-hover: #6ee7b7;
+  --success-light: #064e3b;
+  
+  --warning: #fbbf24;
+  --warning-hover: #fcd34d;
+  --warning-light: #78350f;
+  
+  --danger: #f87171;
+  --danger-hover: #fca5a5;
+  --danger-light: #7f1d1d;
+  
+  --info: #60a5fa;
+  --info-hover: #93c5fd;
+  --info-light: #1e3a8a;
+  
+  --gray-50: #0f172a;
+  --gray-100: #1e293b;
+  --gray-200: #334155;
+  --gray-300: #475569;
+  --gray-400: #64748b;
+  --gray-500: #94a3b8;
+  --gray-600: #cbd5e1;
+  --gray-700: #e2e8f0;
+  --gray-800: #f1f5f9;
+  --gray-900: #f8fafc;
+  
+  --body-bg: #0f172a;
+  --body-bg-secondary: #1e293b;
+  --body-color: var(--gray-900);
+  --body-color-secondary: var(--gray-500);
+  
+  --border-color: #334155;
+  --border-color-light: #1e293b;
+  
+  --card-bg: #1e293b;
+  --card-border: #334155;
+  --card-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
+  --card-shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --card-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  
+  --input-bg: #0f172a;
+  --input-border: #334155;
+  --input-border-focus: var(--primary);
+  --input-color: var(--gray-900);
+  --input-placeholder: var(--gray-400);
+  --input-disabled-bg: #1e293b;
+  
+  --question-bg: #1e293b;
+  --question-bg-hover: #334155;
+  --anonymous-badge-bg: var(--success-light);
+  --anonymous-badge-color: var(--success);
+  
+  --focus-ring: 0 0 0 3px rgba(99, 102, 241, 0.3);
+  --focus-ring-danger: 0 0 0 3px rgba(248, 113, 113, 0.3);
+  
+  --navbar-bg: rgba(15, 23, 42, 0.95);
+  --navbar-border: #334155;
+  --navbar-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+}
+
+$primary: #4f46e5;
+$secondary: #64748b;
+$success: #10b981;
+$info: #3b82f6;
+$warning: #f59e0b;
+$danger: #ef4444;
+$light: #f9fafb;
+$dark: #111827;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark
+);
+
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer,
+  4: $spacer * 1.5,
+  5: $spacer * 2,
+  6: $spacer * 3,
+  7: $spacer * 4,
+  8: $spacer * 6,
+);
+
+$body-bg: #ffffff;
+$body-color: #111827;
+
+$link-color: $primary;
+$link-decoration: none;
+$link-hover-color: darken($primary, 10%);
+$link-hover-decoration: underline;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
+
+$border-radius: 0.5rem;
+$border-radius-sm: 0.375rem;
+$border-radius-lg: 0.75rem;
+$border-radius-xl: 1rem;
+$border-radius-2xl: 1.5rem;
+$border-radius-pill: 50rem;
+
+$box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+$box-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$box-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+$font-family-sans-serif: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-family-monospace: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+
+$font-size-base: 1rem;
+$font-size-sm: 0.875rem;
+$font-size-lg: 1.125rem;
+
+$font-weight-lighter: 200;
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-bolder: 800;
+
+$h1-font-size: 2.5rem;
+$h2-font-size: 2rem;
+$h3-font-size: 1.75rem;
+$h4-font-size: 1.5rem;
+$h5-font-size: 1.25rem;
+$h6-font-size: 1rem;
+
+$headings-font-weight: 700;
+$headings-line-height: 1.2;
+
+$btn-padding-y: 0.625rem;
+$btn-padding-x: 1.25rem;
+$btn-font-size: 0.9375rem;
+$btn-font-weight: 500;
+$btn-border-radius: 0.5rem;
+$btn-border-radius-sm: 0.375rem;
+$btn-border-radius-lg: 0.75rem;
+$btn-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+$btn-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+$btn-focus-width: 0;
+$btn-focus-box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+
+$input-bg: #ffffff;
+$input-color: #111827;
+$input-border-color: #d1d5db;
+$input-border-radius: 0.5rem;
+$input-border-radius-sm: 0.375rem;
+$input-border-radius-lg: 0.75rem;
+$input-focus-border-color: $primary;
+$input-focus-box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+$input-placeholder-color: #9ca3af;
+$input-disabled-bg: #f3f4f6;
+$input-padding-y: 0.625rem;
+$input-padding-x: 0.875rem;
+$input-font-size: 0.9375rem;
+$input-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+$form-feedback-valid-color: $success;
+$form-feedback-invalid-color: $danger;
+
+$card-bg: #ffffff;
+$card-border-color: #e5e7eb;
+$card-border-radius: 0.75rem;
+$card-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+$card-cap-bg: transparent;
+$card-spacer-y: 1.5rem;
+$card-spacer-x: 1.5rem;
+
+$modal-content-bg: #ffffff;
+$modal-content-border-color: #e5e7eb;
+$modal-backdrop-bg: rgba(0, 0, 0, 0.5);
+$modal-backdrop-opacity: 0.5;
+$modal-border-radius: 1rem;
+
+$navbar-padding-y: 1rem;
+$navbar-padding-x: 1rem;
+$navbar-nav-link-padding-x: 1rem;
+$navbar-brand-font-size: 1.25rem;
+$navbar-brand-font-weight: 700;
+
+$transition-base: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+$transition-fade: opacity 0.15s linear;
+$transition-collapse: height 0.35s ease;

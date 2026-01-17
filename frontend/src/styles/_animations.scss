@@ -1,0 +1,289 @@
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.fade-in { animation: fadeIn 0.5s ease-out; }
+.fade-in-up { animation: fadeInUp 0.6s ease-out; }
+.fade-in-down { animation: fadeInDown 0.6s ease-out; }
+.slide-in-right { animation: slideInRight 0.5s ease-out; }
+.scale-in { animation: scaleIn 0.3s ease-out; }
+
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--gray-200) 0%,
+    var(--gray-100) 50%,
+    var(--gray-200) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: var(--border-radius);
+  
+  &-text {
+    height: 1em;
+    margin-bottom: 0.5em;
+    border-radius: var(--border-radius-sm);
+  }
+  
+  &-title {
+    height: 2em;
+    width: 60%;
+    margin-bottom: 1em;
+  }
+  
+  &-card {
+    height: 200px;
+    border-radius: var(--border-radius-lg);
+  }
+  
+  &-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--border-radius-full);
+  }
+  
+  &-button {
+    height: 40px;
+    width: 120px;
+    border-radius: var(--border-radius);
+  }
+}
+
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover) !important;
+  }
+}
+
+.hover-scale {
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.hover-glow {
+  position: relative;
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 0 20px rgba(79, 70, 229, 0.3);
+  }
+}
+
+.focus-visible-ring {
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+  }
+}
+
+.interactive {
+  cursor: pointer;
+  transition: var(--transition-base);
+  user-select: none;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.card-interactive {
+  cursor: pointer;
+  transition: var(--transition-base);
+  
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--card-shadow-hover);
+  }
+  
+  &:active {
+    transform: translateY(-2px);
+  }
+}
+
+.progress-bar-animated {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(
+    90deg,
+    var(--primary) 0%,
+    var(--primary-light) 50%,
+    var(--primary) 100%
+  );
+  background-size: 200% 100%;
+}
+
+.badge-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.badge-bounce {
+  animation: bounce 1s ease-in-out infinite;
+}
+
+.btn-loading {
+  position: relative;
+  color: transparent !important;
+  pointer-events: none;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 50%;
+    left: 50%;
+    margin-left: -8px;
+    margin-top: -8px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 0.6s linear infinite;
+  }
+}
+
+.question-enter {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+.question-progress {
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.answer-submit {
+  &.success {
+    animation: scaleIn 0.3s ease-out;
+  }
+}
+
+.scroll-fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal.fade .modal-dialog {
+  transition: transform 0.3s ease-out;
+  transform: scale(0.95) translateY(-20px);
+}
+
+.modal.show .modal-dialog {
+  transform: scale(1) translateY(0);
+}
+
+.toast {
+  &.showing {
+    animation: fadeInDown 0.3s ease-out;
+  }
+  
+  &.hide {
+    animation: fadeInUp 0.3s ease-out reverse;
+  }
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.card,
+.btn,
+.form-control,
+.form-select,
+.navbar {
+  transition: 
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    color 0.3s ease,
+    box-shadow 0.2s ease;
+}

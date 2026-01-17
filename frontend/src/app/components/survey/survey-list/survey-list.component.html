@@ -1,0 +1,249 @@
+<div class="survey-list-container">
+  <div class="container mt-4 pb-5">
+  <div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+        <div>
+          <h1 class="display-6 fw-bold mb-1">Moje ankiety</h1>
+          <p class="text-muted mb-0">Zarządzaj swoimi ankietami w jednym miejscu</p>
+        </div>
+        <a routerLink="/survey/create" class="btn btn-outline-primary d-flex align-items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+          <span class="d-none d-sm-inline">Nowa ankieta</span>
+      </a>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+      <p class="text-muted mt-3">Ładowanie ankiet...</p>
+  </div>
+
+    <div *ngIf="!loading && surveys.length === 0" class="empty-state-card">
+      <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" class="text-muted mb-4">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+      </svg>
+      <h3 class="h4 mb-2">Nie masz jeszcze żadnych ankiet</h3>
+      <p class="text-muted mb-4">Utwórz swoją pierwszą ankietę, aby rozpocząć zbieranie odpowiedzi od respondentów</p>
+      <a routerLink="/survey/create" class="btn btn-primary btn-lg">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+          <line x1="12" y1="5" x2="12" y2="19"/>
+          <line x1="5" y1="12" x2="19" y2="12"/>
+        </svg>
+        Utwórz pierwszą ankietę
+      </a>
+    </div>
+
+    <div *ngIf="!loading && surveys.length > 0" class="row g-4">
+      <div class="col-12 col-md-6 col-lg-4" *ngFor="let survey of surveys">
+        <div class="survey-card" [class.survey-card--expired]="survey.status === 'expired'">
+          
+          <div class="survey-card-header">
+            <div class="d-flex justify-content-between align-items-start">
+              
+              <span class="status-badge" [ngClass]="{
+                'status-badge--public': survey.status === 'public',
+                'status-badge--private': survey.status === 'private',
+                'status-badge--expired': survey.status === 'expired'
+            }">
+                <span class="status-badge__dot"></span>
+              {{ survey.status === 'public' ? 'Publiczna' : survey.status === 'private' ? 'Prywatna' : 'Wygasła' }}
+            </span>
+
+              <div class="dropdown" *ngIf="survey.status !== 'expired'">
+                <button class="btn btn-ghost btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="1"/>
+                    <circle cx="12" cy="5" r="1"/>
+                    <circle cx="12" cy="19" r="1"/>
+                  </svg>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end shadow">
+                  <li>
+                    <a class="dropdown-item" [routerLink]="['/survey', survey.id]">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                        <circle cx="12" cy="12" r="3"/>
+                      </svg>
+                      Zobacz ankietę
+                    </a>
+                  </li>
+                  <li *ngIf="!survey.is_locked && survey.status === 'private'">
+                    <a class="dropdown-item" [routerLink]="['/survey', survey.id, 'edit']">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                      </svg>
+                      Edytuj ankietę
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" (click)="copyShareLink(survey)">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+                      </svg>
+                      Skopiuj link
+                    </a>
+                  </li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <a class="dropdown-item" (click)="toggleStatus(survey)" [class.disabled]="updatingStatusId === survey.id">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <path *ngIf="survey.status === 'public'" d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                      </svg>
+                      Zmień na {{ survey.status === 'private' ? 'publiczną' : 'prywatną' }}
+                    </a>
+                  </li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li>
+                    <a class="dropdown-item text-danger" (click)="confirmDelete(survey)">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                        <polyline points="3 6 5 6 21 6"/>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                      </svg>
+                      Usuń ankietę
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          
+          <div class="survey-card-body">
+            
+            <h3 class="survey-card-title">
+              <a [routerLink]="['/survey', survey.id, 'results']" class="text-decoration-none">
+                {{ survey.name }}
+              </a>
+            </h3>
+
+            <div class="survey-card-metadata">
+              <span class="metadata-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+                {{ survey.created_at | date: 'dd MMM yyyy' }}
+              </span>
+              <span class="metadata-divider">-</span>
+              <span class="metadata-item" [class.text-danger]="isExpiringSoon(survey)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+                {{ getExpiryText(survey) }}
+              </span>
+            </div>
+
+            <div class="survey-card-metrics">
+              
+              <div class="metric-item metric-item--primary">
+                <div class="metric-value">{{ survey.submission_count }}</div>
+                <div class="metric-label">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+                  Odpowiedzi
+                </div>
+              </div>
+
+              <div class="metric-item">
+                <div class="metric-value">{{ survey.questions?.length || 0 }}</div>
+                <div class="metric-label">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+              </svg>
+                  Pytania
+                </div>
+          </div>
+
+              <div class="metric-item" *ngIf="survey.is_locked; else emptyMetric">
+                <div class="metric-icon text-danger">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+                </div>
+                <div class="metric-label text-danger">Zablokowana</div>
+              </div>
+              <ng-template #emptyMetric>
+                <div class="metric-item">
+                  <div class="metric-icon text-success">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              </svg>
+                  </div>
+                  <div class="metric-label text-success">Aktywna</div>
+                </div>
+              </ng-template>
+          </div>
+
+            <div class="survey-card-actions">
+              <a [routerLink]="['/survey', survey.id, 'results']" class="btn btn-primary flex-fill">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                  <line x1="18" y1="20" x2="18" y2="10"/>
+                  <line x1="12" y1="20" x2="12" y2="4"/>
+                  <line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+                Zobacz wyniki
+              </a>
+              <button class="btn btn-outline-primary" (click)="shareSurvey(survey)" [title]="'Udostępnij ankietę'">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="18" cy="5" r="3"/>
+                  <circle cx="6" cy="12" r="3"/>
+                  <circle cx="18" cy="19" r="3"/>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+              </svg>
+          </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" [class.show]="showDeleteModal" [style.display]="showDeleteModal ? 'block' : 'none'" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Potwierdź usunięcie</h5>
+        <button type="button" class="btn-close" (click)="cancelDelete()" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Czy na pewno chcesz usunąć ankietę <strong>{{ surveyToDelete?.name }}</strong>?</p>
+        <p class="text-danger mb-0">
+          <small>UWAGA: Ta operacja jest nieodwracalna. Zostaną usunięte wszystkie pytania i odpowiedzi powiązane z tą ankietą.</small>
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="cancelDelete()">Anuluj</button>
+        <button type="button" class="btn btn-danger" (click)="deleteSurvey()" [disabled]="deletingId !== null">
+          <span *ngIf="deletingId === null">Usuń ankietę</span>
+          <span *ngIf="deletingId !== null">
+            <span class="spinner-border spinner-border-sm me-1" role="status"></span>
+            Usuwanie...
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop fade" [class.show]="showDeleteModal" *ngIf="showDeleteModal"></div>

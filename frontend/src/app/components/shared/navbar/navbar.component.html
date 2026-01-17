@@ -1,0 +1,110 @@
+<nav class="navbar navbar-expand-lg sticky-top">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/" (click)="closeMenu()">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="brand-icon">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+      </svg>
+      <strong>Ankietio</strong>
+    </a>
+    
+    <button 
+      class="navbar-toggler" 
+      type="button" 
+      (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed"
+      aria-controls="navbarNav"
+      aria-label="Przełącz nawigację"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav" [ngbCollapse]="isCollapsed">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item" *ngIf="!authService.isLoggedIn()">
+          <a 
+            class="nav-link" 
+            routerLink="/" 
+            routerLinkActive="active" 
+            [routerLinkActiveOptions]="{exact: true}"
+            (click)="closeMenu()"
+          >
+            Strona główna
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isLoggedIn()">
+          <a 
+            class="nav-link" 
+            routerLink="/dashboard" 
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
+            Panel główny
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isLoggedIn()">
+          <a 
+            class="nav-link" 
+            routerLink="/surveys" 
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{exact: true}"
+            (click)="closeMenu()"
+          >
+            Moje ankiety
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isLoggedIn()">
+          <a 
+            class="nav-link" 
+            routerLink="/surveys/public" 
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
+            Przeglądaj ankiety
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isLoggedIn()">
+          <a
+            class="nav-link"
+            routerLink="/templates"
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
+            Szablony
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!authService.isLoggedIn()">
+          <a 
+            class="nav-link" 
+            routerLink="/login" 
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
+            Logowanie
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="!authService.isLoggedIn()">
+          <a 
+            class="nav-link btn-nav-register" 
+            routerLink="/register" 
+            routerLinkActive="active"
+            (click)="closeMenu()"
+          >
+            Rejestracja
+          </a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isLoggedIn()">
+          <a 
+            class="nav-link btn-nav-register" 
+            (click)="logout(); closeMenu()" 
+            style="cursor: pointer;"
+          >
+            Wyloguj
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
