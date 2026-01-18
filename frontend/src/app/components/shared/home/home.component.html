@@ -1,0 +1,345 @@
+<div class="home-container">
+  
+  <section class="hero-section">
+    <div class="container">
+      <div class="row min-vh-100 align-items-center py-5">
+        <div class="col-lg-6 mb-5 mb-lg-0">
+          <div class="hero-content fade-in-up">
+            
+            <div class="hero-badge mb-4">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+              <span>100% Anonimowe ankiety</span>
+            </div>
+            
+            <h1 class="display-2 fw-bold mb-4">
+              Twórz ankiety 
+              <span class="text-gradient d-block">łatwo i anonimowo</span>
+      </h1>
+            
+            <p class="lead mb-4 text-muted-light">
+              Ankietio to nowoczesne narzędzie do tworzenia w pełni anonimowych ankiet online. 
+              Projektuj pytania, zbieraj odpowiedzi i analizuj wyniki - wszystko w jednym miejscu.
+      </p>
+            
+            <div class="hero-features mb-5">
+              <div class="feature-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Pełna anonimowość</span>
+              </div>
+              <div class="feature-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Intuicyjny kreator</span>
+              </div>
+              <div class="feature-item">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
+                <span>Analiza wyników</span>
+              </div>
+            </div>
+            
+            <div class="hero-actions d-flex flex-wrap gap-3">
+              <a 
+                *ngIf="!authService.isLoggedIn()" 
+                routerLink="/register" 
+                class="btn btn-primary btn-lg hover-lift"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                  <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                  <polyline points="10 17 15 12 10 7"/>
+                  <line x1="15" y1="12" x2="3" y2="12"/>
+                </svg>
+          Rozpocznij za darmo
+        </a>
+              
+              <a 
+                *ngIf="authService.isLoggedIn()" 
+                routerLink="/dashboard" 
+                class="btn btn-primary btn-lg hover-lift"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                  <rect x="3" y="3" width="7" height="7"/>
+                  <rect x="14" y="3" width="7" height="7"/>
+                  <rect x="14" y="14" width="7" height="7"/>
+                  <rect x="3" y="14" width="7" height="7"/>
+                </svg>
+          Przejdź do Panelu głównego
+        </a>
+              
+              <a 
+                *ngIf="!authService.isLoggedIn()" 
+                routerLink="/login" 
+                class="btn btn-outline-primary btn-lg"
+              >
+          Zaloguj się
+        </a>
+            </div>
+            
+            <div class="social-proof mt-5">
+              <div class="social-proof-content">
+                <div class="social-proof-avatars">
+                  <div class="avatar">U</div>
+                  <div class="avatar">U</div>
+                  <div class="avatar">U</div>
+                  <div class="avatar-count">+</div>
+                </div>
+                <div class="social-proof-text">
+                  <strong>Dołącz do użytkowników</strong> którzy zaufali Ankietio
+                </div>
+              </div>
+            </div>
+      </div>
+    </div>
+        
+    <div class="col-lg-6 d-none d-lg-block">
+          <div class="hero-visual fade-in scale-in">
+            
+            <div class="visual-card card-hover">
+              <svg class="main-illustration" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+                <defs>
+                  <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:var(--primary);stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:var(--primary-light);stop-opacity:1" />
+                  </linearGradient>
+                </defs>
+                
+                <rect x="80" y="60" width="240" height="280" rx="12" fill="var(--card-bg)" stroke="url(#gradient1)" stroke-width="3"/>
+                
+                <rect x="100" y="80" width="120" height="12" rx="6" fill="url(#gradient1)" opacity="0.8"/>
+                <rect x="100" y="100" width="80" height="8" rx="4" fill="var(--gray-400)" opacity="0.6"/>
+                
+                <circle cx="110" cy="135" r="8" fill="url(#gradient1)"/>
+                <rect x="130" y="130" width="160" height="10" rx="5" fill="var(--gray-400)" opacity="0.6"/>
+                <rect x="130" y="150" width="140" height="8" rx="4" fill="var(--gray-300)" opacity="0.4"/>
+                
+                <circle cx="110" cy="190" r="8" fill="url(#gradient1)"/>
+                <rect x="130" y="185" width="150" height="10" rx="5" fill="var(--gray-400)" opacity="0.6"/>
+                <rect x="130" y="205" width="120" height="8" rx="4" fill="var(--gray-300)" opacity="0.4"/>
+                
+                <circle cx="110" cy="245" r="8" fill="url(#gradient1)"/>
+                <rect x="130" y="240" width="170" height="10" rx="5" fill="var(--gray-400)" opacity="0.6"/>
+                <rect x="130" y="260" width="130" height="8" rx="4" fill="var(--gray-300)" opacity="0.4"/>
+                
+                <rect x="140" y="300" width="120" height="24" rx="12" fill="url(#gradient1)"/>
+                
+                <g transform="translate(340, 40)">
+                  <rect x="-10" y="5" width="20" height="20" rx="4" fill="var(--success)" opacity="0.2"/>
+                  <path d="M -5,10 L -5,7 A 5,5 0 0,1 5,7 L 5,10" stroke="var(--success)" stroke-width="2" fill="none"/>
+                  <rect x="-6" y="10" width="12" height="10" rx="2" fill="var(--success)"/>
+                  <circle cx="0" cy="15" r="1.5" fill="white"/>
+                </g>
+        </svg>
+              
+              <div class="floating-element" style="top: 10%; right: -10%; animation-delay: 0s;">
+                <div class="badge badge-soft-success">Anonimowe</div>
+              </div>
+              <div class="floating-element" style="bottom: 15%; left: -5%; animation-delay: 0.5s;">
+                <div class="badge badge-soft-primary">Bezpieczne</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="scroll-indicator">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+  </div>
+  </section>
+
+  <section class="features-section py-6" id="features">
+    <div class="container">
+      <div class="text-center mb-5 fade-in-up">
+        <span class="section-badge">Funkcje</span>
+        <h2 class="display-4 fw-bold mt-3 mb-3">Wszystko czego potrzebujesz</h2>
+        <p class="lead text-muted-light">
+          Profesjonalne narzędzia do tworzenia i zarządzania ankietami
+        </p>
+    </div>
+
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4 fade-in-up stagger-1">
+          <div class="feature-card card card-hover h-100">
+            <div class="card-body p-4">
+              <div class="feature-icon mb-4">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 20h9"/>
+              <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
+            </svg>
+          </div>
+              <h5 class="card-title fw-bold mb-3">Łatwe tworzenie</h5>
+              <p class="card-text text-muted-light mb-0">
+            Intuicyjny interfejs do tworzenia ankiet z różnymi typami pytań: otwarte, jednokrotnego i wielokrotnego wyboru.
+          </p>
+        </div>
+      </div>
+    </div>
+
+        <div class="col-md-6 col-lg-4 fade-in-up stagger-2">
+          <div class="feature-card card card-hover h-100">
+            <div class="card-body p-4">
+              <div class="feature-icon mb-4">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              </div>
+              <h5 class="card-title fw-bold mb-3">Pełna anonimowość</h5>
+              <p class="card-text text-muted-light mb-0">
+                Gwarantujemy 100% anonimowość respondentów. Nie zbieramy żadnych danych osobowych podczas wypełniania ankiet.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 fade-in-up stagger-3">
+          <div class="feature-card card card-hover h-100">
+            <div class="card-body p-4">
+              <div class="feature-icon mb-4">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+              <h5 class="card-title fw-bold mb-3">Udostępniaj ankiety</h5>
+              <p class="card-text text-muted-light mb-0">
+            Publikuj ankiety i zbieraj odpowiedzi od respondentów. Kontroluj status ankiet (publiczne/prywatne).
+          </p>
+        </div>
+      </div>
+    </div>
+
+        <div class="col-md-6 col-lg-4 fade-in-up stagger-4">
+          <div class="feature-card card card-hover h-100">
+            <div class="card-body p-4">
+              <div class="feature-icon mb-4">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="18" y1="20" x2="18" y2="10"/>
+              <line x1="12" y1="20" x2="12" y2="4"/>
+              <line x1="6" y1="20" x2="6" y2="14"/>
+            </svg>
+          </div>
+              <h5 class="card-title fw-bold mb-3">Analizuj wyniki</h5>
+              <p class="card-text text-muted-light mb-0">
+            Przeglądaj i analizuj zebrane odpowiedzi. Wszystkie dane w jednym miejscu, łatwo dostępne.
+          </p>
+        </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 fade-in-up stagger-5">
+          <div class="feature-card card card-hover h-100">
+            <div class="card-body p-4">
+              <div class="feature-icon mb-4">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+              </div>
+              <h5 class="card-title fw-bold mb-3">Tryb ciemny</h5>
+              <p class="card-text text-muted-light mb-0">
+                Komfortowe wypełnianie ankiet w każdych warunkach oświetleniowych dzięki automatycznemu trybowi ciemnemu.
+              </p>
+      </div>
+    </div>
+  </div>
+
+        <div class="col-md-6 col-lg-4 fade-in-up stagger-6">
+          <div class="feature-card card card-hover h-100">
+            <div class="card-body p-4">
+              <div class="feature-icon mb-4">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="3" width="20" height="14" rx="2"/>
+                  <line x1="8" y1="21" x2="16" y2="21"/>
+                  <line x1="12" y1="17" x2="12" y2="21"/>
+                </svg>
+              </div>
+              <h5 class="card-title fw-bold mb-3">Responsywny design</h5>
+              <p class="card-text text-muted-light mb-0">
+                Pełna responsywność na wszystkich urządzeniach. Wypełniaj ankiety wygodnie na telefonie, tablecie lub komputerze.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section py-6">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="cta-card card border-0 shadow-lg fade-in-up">
+            <div class="card-body p-5 text-center">
+              <div class="cta-icon mb-4">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01"/>
+                </svg>
+              </div>
+              
+              <h2 class="display-5 fw-bold mb-3">Gotowy na start?</h2>
+              <p class="lead mb-4 text-muted-light">
+                Dołącz do Ankietio i zacznij tworzyć swoje pierwsze anonimowe ankiety już dziś!
+              </p>
+              
+              <div class="d-flex flex-wrap justify-content-center gap-3">
+                <a 
+                  *ngIf="!authService.isLoggedIn()" 
+                  routerLink="/register" 
+                  class="btn btn-primary btn-lg hover-lift"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                    <polyline points="10 17 15 12 10 7"/>
+                    <line x1="15" y1="12" x2="3" y2="12"/>
+                  </svg>
+            Zarejestruj się teraz
+          </a>
+                
+                <a 
+                  *ngIf="authService.isLoggedIn()" 
+                  routerLink="/dashboard" 
+                  class="btn btn-primary btn-lg hover-lift"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                  </svg>
+            Przejdź do Panelu głównego
+          </a>
+                
+                <a 
+                  *ngIf="!authService.isLoggedIn()" 
+                  routerLink="/login" 
+                  class="btn btn-outline-primary btn-lg"
+                >
+                  Już mam konto
+                </a>
+              </div>
+              
+              <div class="cta-note mt-4">
+                <small class="text-muted-light">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                    <polyline points="20 6 9 17 4 12"/>
+                  </svg>
+                  Rejestracja zajmuje mniej niż minutę - Nie wymagamy karty kredytowej
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

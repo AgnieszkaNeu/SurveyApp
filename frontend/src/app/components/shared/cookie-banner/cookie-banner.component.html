@@ -1,0 +1,118 @@
+<div class="cookie-banner-overlay" *ngIf="showBanner">
+  <div class="cookie-modal">
+    <div class="cookie-header">
+      <div class="cookie-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5"></path>
+          <path d="M8.5 8.5v.01"></path>
+          <path d="M16 15.5v.01"></path>
+          <path d="M12 12v.01"></path>
+          <path d="M11 17v.01"></path>
+          <path d="M7 14v.01"></path>
+        </svg>
+      </div>
+      <h5 class="cookie-modal-title">Ustawienia prywatności</h5>
+      <p class="cookie-modal-description">
+        Ta aplikacja używa różnych technologii do poprawnego działania i zapobiegania nadużyciom.
+      </p>
+    </div>
+
+    <div class="cookie-categories">
+      
+      <div class="cookie-category">
+        <div class="category-header">
+          <div class="category-toggle">
+            <input 
+              type="checkbox" 
+              id="necessary" 
+              checked 
+              disabled
+              class="toggle-input">
+            <label for="necessary" class="toggle-label">
+              <span class="toggle-switch"></span>
+            </label>
+          </div>
+          <div class="category-info">
+            <h6 class="category-title">Niezbędne</h6>
+            <p class="category-description">
+              Logowanie, bezpieczeństwo, sesja użytkownika. Te technologie są wymagane do działania aplikacji.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cookie-category">
+        <div class="category-header">
+          <div class="category-toggle">
+            <input 
+              type="checkbox" 
+              id="functional" 
+              [(ngModel)]="functionalEnabled"
+              class="toggle-input">
+            <label for="functional" class="toggle-label">
+              <span class="toggle-switch"></span>
+            </label>
+          </div>
+          <div class="category-info">
+            <h6 class="category-title">Funkcjonalne</h6>
+            <p class="category-description">
+              Preferencje motywu (jasny/ciemny), język, zapisane ustawienia. Bez tego Twoje preferencje nie będą zapamiętane.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="cookie-category">
+        <div class="category-header">
+          <div class="category-toggle">
+            <input 
+              type="checkbox" 
+              id="fingerprinting" 
+              [(ngModel)]="fingerprintingEnabled"
+              class="toggle-input">
+            <label for="fingerprinting" class="toggle-label">
+              <span class="toggle-switch"></span>
+            </label>
+          </div>
+          <div class="category-info">
+            <h6 class="category-title">Zapobieganie duplikatom</h6>
+            <p class="category-description">
+              Zbieramy parametry urządzenia (rozdzielczość, czcionki, parametry renderowania) aby wykryć czy już wypełniłeś ankietę.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cookie-footer">
+      <a routerLink="/polityka-prywatnosci" class="btn btn-link" (click)="closeBanner()">
+        Polityka Prywatności
+      </a>
+      
+      <div class="cookie-actions">
+        <button 
+          type="button" 
+          class="btn btn-outline-secondary" 
+          (click)="acceptNecessaryOnly()">
+          Tylko niezbędne
+        </button>
+        
+        <button 
+          *ngIf="showCustomize" 
+          type="button" 
+          class="btn btn-primary" 
+          (click)="saveCustomPreferences()">
+          Zapisz wybór
+        </button>
+        
+        <button 
+          *ngIf="!showCustomize" 
+          type="button" 
+          class="btn btn-primary" 
+          (click)="acceptAll()">
+          Akceptuj wszystko
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<div class="auth-container">
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="auth-card">
+          <div class="auth-header">
+            <div class="auth-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="8.5" cy="7" r="4"/>
+                <line x1="20" y1="8" x2="20" y2="14"/>
+                <line x1="23" y1="11" x2="17" y2="11"/>
+              </svg>
+            </div>
+            <h2 class="auth-title">Utwórz konto</h2>
+            <p class="auth-subtitle">Dołącz do Ankietio już dziś</p>
+          </div>
+          
+          <div *ngIf="successMessage" class="alert alert-success" role="alert">
+            {{ successMessage }}
+          </div>
+
+          <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+            {{ errorMessage }}
+          </div>
+
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="email" class="form-label">
+                Email
+                <span class="text-danger" aria-label="wymagane">*</span>
+              </label>
+              <input 
+                type="email" 
+                class="form-control" 
+                id="email" 
+                formControlName="email"
+                [class.is-invalid]="email?.invalid && email?.touched"
+                [attr.aria-describedby]="'email-error'"
+                [attr.aria-invalid]="email?.invalid && email?.touched"
+                placeholder="twoj@email.com"
+                autocomplete="email">
+              <div class="invalid-feedback" id="email-error" *ngIf="email?.invalid && email?.touched">
+                <div *ngIf="email?.errors?.['required']">Email jest wymagany</div>
+                <div *ngIf="email?.errors?.['email']">Nieprawidłowy format email</div>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <app-password-input
+                formControlName="password"
+                [control]="password"
+                [id]="'password'"
+                [label]="'Hasło'"
+                [placeholder]="'Min. 8 znaków'"
+                [required]="true"
+                [maxLength]="40"
+                [showStrengthMeter]="true"
+                [helperText]="'Użyj co najmniej 8 znaków, wielkich i małych liter oraz cyfr'"
+                [ariaDescribedby]="'password-error'">
+              </app-password-input>
+              
+              <app-form-field-error 
+                [control]="password" 
+                fieldName="Hasło"
+                errorId="password-error">
+              </app-form-field-error>
+            </div>
+
+            <div class="mb-3">
+              <app-password-input
+                formControlName="confirmPassword"
+                [control]="confirmPassword"
+                [id]="'confirmPassword'"
+                [label]="'Potwierdź hasło'"
+                [placeholder]="'Powtórz hasło'"
+                [required]="true"
+                [ariaDescribedby]="'confirmPassword-error'">
+              </app-password-input>
+              
+              <app-form-field-error 
+                [control]="confirmPassword" 
+                fieldName="Potwierdzenie hasła"
+                errorId="confirmPassword-error">
+              </app-form-field-error>
+            </div>
+
+            <div class="d-grid gap-2 mb-3">
+              <button 
+                type="submit" 
+                class="btn btn-primary" 
+                [disabled]="loading || registerForm.invalid">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                {{ loading ? 'Rejestracja...' : 'Zarejestruj się' }}
+              </button>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="text-center">
+              <p class="text-muted mb-2">Masz już konto?</p>
+              <a routerLink="/login" class="btn btn-outline-primary w-100">Zaloguj się</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

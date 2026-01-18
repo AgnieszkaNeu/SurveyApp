@@ -1,0 +1,429 @@
+<div class="survey-fill-container">
+  
+  <div *ngIf="loading" class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="skeleton skeleton-title mb-4"></div>
+        <div class="skeleton skeleton-text mb-2" style="width: 40%;"></div>
+        <div class="skeleton skeleton-text mb-4" style="width: 30%;"></div>
+        
+        <div class="card mb-4">
+          <div class="card-body">
+            <div class="skeleton skeleton-text mb-3"></div>
+            <div class="skeleton skeleton-card"></div>
+          </div>
+        </div>
+        
+        <div class="card">
+          <div class="card-body">
+            <div class="skeleton skeleton-text mb-3"></div>
+            <div class="skeleton skeleton-card"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="alreadySubmittedMessage" class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="text-center fade-in">
+          
+          <div class="mb-4">
+            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+              
+              <rect x="30" y="20" width="60" height="80" rx="4" fill="currentColor" opacity="0.1"/>
+              <rect x="35" y="25" width="50" height="70" rx="2" fill="var(--bs-body-bg)" stroke="currentColor" stroke-width="2"/>
+              <rect x="45" y="15" width="30" height="12" rx="6" fill="var(--bs-body-bg)" stroke="currentColor" stroke-width="2"/>
+              
+              <circle cx="60" cy="55" r="18" fill="var(--bs-success)" opacity="0.2"/>
+              <circle cx="60" cy="55" r="18" stroke="var(--bs-success)" stroke-width="2.5" fill="none"/>
+              <path d="M52 55 L57 60 L68 48" stroke="var(--bs-success)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              
+              <line x1="45" y1="78" x2="75" y2="78" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+              <line x1="45" y1="85" x2="65" y2="85" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.3"/>
+            </svg>
+          </div>
+          
+          <h2 class="display-6 fw-bold mb-3">Dziękujemy za udział</h2>
+          
+          <p class="lead text-muted mb-2">
+            Twoja odpowiedź została już pomyślnie przesłana.
+          </p>
+          
+          <div class="card border-0 bg-light-subtle mt-4 mb-4">
+            <div class="card-body p-4">
+              <div class="d-flex align-items-start gap-3 text-start">
+                <div class="flex-shrink-0">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-primary">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                  </svg>
+                </div>
+                <div>
+                  <h6 class="mb-2">Dlaczego widzę tę wiadomość?</h6>
+                  <p class="text-muted small mb-0">
+                    Każda osoba może wypełnić tę ankietę tylko jeden raz, aby zapewnić rzetelność wyników. 
+                    Jeśli uważasz, że to pomyłka, skontaktuj się z autorem ankiety.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="d-flex flex-column flex-sm-row gap-2 justify-content-center">
+            <a routerLink="/" class="btn btn-primary btn-lg px-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+              </svg>
+              Strona główna
+            </a>
+            <a routerLink="/surveys" class="btn btn-outline-secondary btn-lg px-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+              </svg>
+              Przeglądaj ankiety
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="successMessage" class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="text-center fade-in">
+          
+          <div class="mb-4">
+            <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="40" cy="40" r="35" fill="var(--bs-success)" opacity="0.1"/>
+              <circle cx="40" cy="40" r="35" stroke="var(--bs-success)" stroke-width="3"/>
+              <path d="M25 40 L35 50 L55 30" stroke="var(--bs-success)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          
+          <h2 class="display-6 fw-bold mb-3 text-success">Dziękujemy!</h2>
+          <p class="lead text-muted">{{ successMessage }}</p>
+          
+          <div class="mt-4">
+            <small class="text-muted">Zostaniesz przekierowany za chwilę...</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div *ngIf="errorMessage && !alreadySubmittedMessage" class="container py-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-6 col-md-8">
+        <div class="alert fade-in" 
+             [ngClass]="{
+               'alert-warning': errorMessage.includes('zmodyfikowana'),
+               'alert-danger': !errorMessage.includes('zmodyfikowana')
+             }" 
+             role="alert">
+          <div class="d-flex align-items-start gap-3">
+            <svg *ngIf="!errorMessage.includes('zmodyfikowana')" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="15" y1="9" x2="9" y2="15"></line>
+              <line x1="9" y1="9" x2="15" y2="15"></line>
+            </svg>
+            <svg *ngIf="errorMessage.includes('zmodyfikowana')" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="flex-shrink-0">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <div>
+              <strong *ngIf="errorMessage.includes('zmodyfikowana')">Ankieta została zaktualizowana</strong>
+              <strong *ngIf="!errorMessage.includes('zmodyfikowana')">Wystąpił błąd</strong>
+              <p class="mb-0">{{ errorMessage }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center mt-3">
+          <button *ngIf="errorMessage.includes('zmodyfikowana')" 
+                  class="btn btn-primary me-2"
+                  (click)="refreshPage()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+            Odśwież ankietę
+          </button>
+          <a routerLink="/" class="btn btn-outline-secondary">
+            Powrót do strony głównej
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && survey && !successMessage && !errorMessage" class="container py-4 py-md-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        
+        <div class="survey-header fade-in-up mb-4">
+          <div class="d-flex align-items-start justify-content-between mb-3">
+            <div class="flex-grow-1">
+              <h1 class="display-5 fw-bold mb-3">{{ survey.name }}</h1>
+              <div class="d-flex flex-wrap gap-2 align-items-center text-muted-light">
+                <span class="d-flex align-items-center gap-1">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  Wygasa: {{ survey.expires_at | date: 'dd.MM.yyyy, HH:mm' }}
+                </span>
+                <span class="text-muted">-</span>
+                <span class="d-flex align-items-center gap-1">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 11l3 3L22 4"/>
+                    <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/>
+                  </svg>
+                  {{ survey.questions.length }} {{ survey.questions.length === 1 ? 'pytanie' : 'pytania' }}
+                </span>
+              </div>
+            </div>
+      </div>
+
+          <div class="anonymous-badge-enhanced">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+            <div>
+              <strong>W pełni anonimowe</strong>
+              <small>Nie zbieramy żadnych danych osobowych</small>
+            </div>
+          </div>
+          
+          <div class="survey-meta d-flex flex-wrap gap-3 align-items-center mb-3">
+            <span class="d-flex align-items-center gap-1">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+              <strong>~{{ getEstimatedTime() }} min</strong>
+            </span>
+            <span>-</span>
+            <span>{{ survey.questions.length }} {{ survey.questions.length === 1 ? 'pytanie' : 'pytań' }}</span>
+          </div>
+          
+          <div class="progress-wrapper">
+            <div class="progress progress-survey">
+              <div 
+                class="progress-bar question-progress" 
+                role="progressbar" 
+                [style.width.%]="getProgress()"
+                [attr.aria-valuenow]="getProgress()"
+                aria-valuemin="0" 
+                aria-valuemax="100"
+              ></div>
+            </div>
+            <small class="text-muted-light mt-1 d-block text-center">
+              Wypełniono {{ getAnsweredCount() }} z {{ survey.questions.length }} pytań
+            </small>
+          </div>
+        </div>
+
+        <form [formGroup]="responseForm" (ngSubmit)="onSubmit()" class="survey-form">
+          <div formArrayName="answers" class="questions-container">
+            <div 
+              *ngFor="let answer of answers.controls; let i = index" 
+              class="question-card card card-survey-question mb-4 question-enter"
+              [class.stagger-1]="i === 0"
+              [class.stagger-2]="i === 1"
+              [class.stagger-3]="i === 2"
+              [formGroupName]="i"
+            >
+        <div class="card-body p-4">
+                
+                <div class="question-header mb-4">
+                  <div class="d-flex align-items-start gap-3">
+                    <span class="question-number">{{ i + 1 }}</span>
+                    <div class="flex-grow-1">
+                      <h5 class="question-title mb-2">
+                        {{ survey.questions[i].content }}
+                        <span class="text-danger" *ngIf="isQuestionRequired(i)">*</span>
+                      </h5>
+                      <p class="question-type text-muted-light mb-0">
+                        {{ getQuestionTypeLabel(survey.questions[i].answer_type) }}
+                        <span class="badge bg-danger ms-2" *ngIf="isQuestionRequired(i)">
+                          Wymagane
+                        </span>
+                      </p>
+                    </div>
+                    
+                    <div class="question-status" *ngIf="isQuestionAnswered(i)">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="text-success">
+                        <circle cx="12" cy="12" r="10" fill="currentColor" opacity="0.2"/>
+                        <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+
+                <div *ngIf="survey.questions[i].answer_type === AnswerType.OPEN" class="answer-section">
+                  <textarea 
+                    class="form-control form-control-lg" 
+                    formControlName="response" 
+                    rows="4" 
+                    placeholder="Wpisz swoją odpowiedź..."
+                    [attr.aria-label]="'Odpowiedź na pytanie: ' + survey.questions[i].content"
+                    [class.is-invalid]="answers.at(i).get('response')?.invalid && answers.at(i).get('response')?.touched"
+                  ></textarea>
+                  <div *ngIf="answers.at(i).get('response')?.invalid && answers.at(i).get('response')?.touched" class="invalid-feedback">
+                    <span *ngIf="answers.at(i).get('response')?.errors?.['required']">To pytanie jest wymagane</span>
+                    <span *ngIf="answers.at(i).get('response')?.errors?.['whitespace']">Odpowiedź nie może być pusta</span>
+                  </div>
+                </div>
+
+                <div *ngIf="survey.questions[i].answer_type === AnswerType.CLOSE" class="answer-section">
+                  <div class="form-check form-check-enhanced mb-3" *ngFor="let choice of survey.questions[i].choices; let j = index">
+                    <input 
+                      class="form-check-input" 
+                      type="radio" 
+                      [value]="choice.content" 
+                      formControlName="response" 
+                      [id]="'q' + i + 'c' + choice.position"
+                      [attr.aria-label]="choice.content"
+                    >
+                    <label class="form-check-label" [for]="'q' + i + 'c' + choice.position">
+                      {{ choice.content }}
+                    </label>
+                  </div>
+                </div>
+
+                <div *ngIf="survey.questions[i].answer_type === AnswerType.MULTIPLE" formArrayName="checkboxes" class="answer-section">
+                  <div class="form-check form-check-enhanced mb-3" *ngFor="let choice of survey.questions[i].choices; let j = index">
+                    <input 
+                      class="form-check-input" 
+                      type="checkbox" 
+                      [formControlName]="j" 
+                      [id]="'q' + i + 'c' + j"
+                      [attr.aria-label]="choice.content"
+                    >
+                    <label class="form-check-label" [for]="'q' + i + 'c' + j">
+                      {{ choice.content }}
+                    </label>
+                  </div>
+                </div>
+                
+                <div *ngIf="survey.questions[i].answer_type === AnswerType.SCALE" class="answer-section">
+                  <input 
+                    type="range" 
+                    class="form-range" 
+                    formControlName="response"
+                    [min]="survey.questions[i].settings?.min || 1"
+                    [max]="survey.questions[i].settings?.max || 5"
+                    [step]="survey.questions[i].settings?.step || 1"
+                  >
+                  <div class="d-flex justify-content-between text-muted small">
+                    <span>{{ survey.questions[i].settings?.min || 1 }}</span>
+                    <strong>{{ answer.get('response')?.value }}</strong>
+                    <span>{{ survey.questions[i].settings?.max || 5 }}</span>
+                  </div>
+                </div>
+                
+                <div *ngIf="survey.questions[i].answer_type === AnswerType.RATING" class="answer-section">
+                  <div class="rating-stars">
+                    <span *ngFor="let star of getStarArray(survey.questions[i].settings?.max || 5); let j = index"
+                          class="star"
+                          [class.filled]="answer.get('response')?.value >= star"
+                          (click)="answer.get('response')?.setValue(star)">
+                      *
+                    </span>
+                  </div>
+                </div>
+                
+                <div *ngIf="survey.questions[i].answer_type === AnswerType.YES_NO" class="answer-section">
+                  <div class="btn-group w-100" role="group">
+                    <input type="radio" class="btn-check" value="Tak" formControlName="response" [id]="'yes' + i">
+                    <label class="btn btn-outline-success" [for]="'yes' + i">Tak</label>
+                    
+                    <input type="radio" class="btn-check" value="Nie" formControlName="response" [id]="'no' + i">
+                    <label class="btn btn-outline-danger" [for]="'no' + i">Nie</label>
+                  </div>
+                </div>
+                
+                <div *ngIf="survey.questions[i].answer_type === AnswerType.DROPDOWN" class="answer-section">
+                  <select class="form-select" formControlName="response">
+                    <option value="">-- Wybierz --</option>
+                    <option *ngFor="let choice of survey.questions[i].choices" [value]="choice.content">
+                      {{ choice.content }}
+                    </option>
+                  </select>
+                </div>
+                
+                <div *ngIf="survey.questions[i].answer_type === AnswerType.DATE" class="answer-section">
+                  <input type="date" class="form-control" formControlName="response">
+                </div>
+                
+                <div *ngIf="survey.questions[i].answer_type === AnswerType.EMAIL" class="answer-section">
+                  <input type="email" class="form-control" formControlName="response" placeholder="nazwa@example.com">
+                </div>
+                
+                <div *ngIf="survey.questions[i].answer_type === AnswerType.NUMBER" class="answer-section">
+                  <input type="number" class="form-control" formControlName="response">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions card border-0 shadow-sm sticky-bottom fade-in-up">
+            <div class="card-body p-4">
+              <div class="d-flex flex-column flex-md-row gap-3 align-items-md-center justify-content-between">
+                <div class="form-status">
+                  <small class="text-muted-light">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    Twoje dane są bezpieczne i anonimowe
+                  </small>
+                </div>
+
+                <div class="d-flex gap-2 flex-grow-1 flex-md-grow-0">
+                  <button 
+                    type="submit" 
+                    class="btn btn-primary btn-lg flex-grow-1 flex-md-grow-0"
+                    [disabled]="submitting || responseForm.invalid"
+                    [class.btn-loading]="submitting"
+                  >
+                    <span *ngIf="!submitting">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                        <line x1="22" y1="2" x2="11" y2="13"/>
+                        <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                      </svg>
+                      Wyślij odpowiedzi
+                    </span>
+                    <span *ngIf="submitting">Wysyłanie...</span>
+                  </button>
+                  
+                  <a routerLink="/" class="btn btn-outline-secondary btn-lg">
+                    Anuluj
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          </form>
+          
+          <div class="sending-overlay" *ngIf="submitting">
+            <div class="sending-card">
+              <div class="spinner-border text-primary mb-3"></div>
+              <h5>Wysyłamy Twoje odpowiedzi...</h5>
+              <p class="text-muted">To może potrwać chwilę</p>
+              <div class="progress mt-3" style="height: 4px;">
+                <div class="progress-bar progress-bar-animated" style="width: 100%"></div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

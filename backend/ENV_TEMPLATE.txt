@@ -1,0 +1,15 @@
+SECRET_KEY=your-secret-key-at-least-32-characters-long
+
+AWS_ACCESS_KEY_ID=your-aws-access-key-id
+AWS_SECRET_ACCESS_KEY=your-aws-secret-access-key
+REGION_NAME=eu-central-1
+DOMAIN_MAIL=noreply@yourdomain.com
+
+API_V1_PREFIX=/api/v1
+FRONTEND_URL=http://localhost:4200
+
+POSTGRES_USER=your-postgres-user
+POSTGRES_PASSWORD=your-secure-password
+POSTGRES_SERVER=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=ankietio_db
