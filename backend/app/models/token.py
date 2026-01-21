@@ -1,4 +1,6 @@
+from typing import Optional
 from sqlmodel import SQLModel
+
 
 class Token(SQLModel):
     access_token: str
@@ -6,4 +8,4 @@ class Token(SQLModel):
 
 
 class TokenPayload(SQLModel):
-    sub: str | None = None
+    sub: Optional[str] = None

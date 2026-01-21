@@ -1,3 +1,4 @@
+from typing import Optional
 import jwt
 from .config import settings
 from ..models.token import TokenPayload
@@ -15,15 +16,13 @@ def decode_jwt_token(token: str) -> TokenPayload:
             options={"require": ["exp", "sub"]} 
         )
         return TokenPayload(**payload)
-
     except ExpiredSignatureError:
         raise TokenExpiredException()
-
     except (InvalidTokenError, ValueError):
         raise InvalidTokenException()
 
 
-def create_token(subject: str, expires_delta: timedelta | None = None):
+def create_token(subject: str, expires_delta: Optional[timedelta] = None):
     expire = datetime.now(timezone.utc) + (
         expires_delta or timedelta(minutes=15)
     )

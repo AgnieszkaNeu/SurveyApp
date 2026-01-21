@@ -1,0 +1,314 @@
+<div class="survey-edit-container">
+  
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;"></div>
+    <p class="mt-3 text-muted">Ładowanie ankiety...</p>
+  </div>
+
+  <div *ngIf="!loading && survey" class="container-fluid">
+    
+    <div class="edit-header sticky-top">
+      <div class="container">
+        <div class="row align-items-center py-3">
+          <div class="col-md-6">
+            <div class="d-flex align-items-center gap-2 mb-2">
+              <button type="button" class="btn btn-ghost btn-sm" (click)="cancel()" title="Powrót">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="19" y1="12" x2="5" y2="12"/>
+                  <polyline points="12 19 5 12 12 5"/>
+                </svg>
+              </button>
+              <h1 class="h4 mb-0 fw-bold">{{ survey.name }}</h1>
+            </div>
+            <div class="d-flex align-items-center gap-3 flex-wrap">
+              <span class="badge" [ngClass]="{
+                'bg-success': survey.status === 'public',
+                'bg-warning': survey.status === 'private',
+                'bg-secondary': survey.status === 'expired'
+              }">
+                {{ survey.status === 'public' ? 'Publiczna' : survey.status === 'private' ? 'Prywatna' : 'Wygasła' }}
+              </span>
+              <span class="text-muted small" *ngIf="survey.submission_count > 0">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+                {{ survey.submission_count }} {{ survey.submission_count === 1 ? 'odpowiedź' : 'odpowiedzi' }}
+              </span>
+              <span class="save-status" [ngClass]="{
+                'text-success': saveStatus === 'saved',
+                'text-warning': saveStatus === 'unsaved',
+                'text-primary': saveStatus === 'saving'
+              }">
+                <span *ngIf="saveStatus === 'saved'" class="d-inline-flex align-items-center gap-1">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                    <polyline points="17 21 17 13 7 13 7 21"/>
+                    <polyline points="7 3 7 8 15 8"/>
+                  </svg>
+                  Wszystko zapisane
+                </span>
+                <span *ngIf="saveStatus === 'unsaved'" class="d-inline-flex align-items-center gap-1">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="8" x2="12" y2="12"/>
+                    <line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                  Niezapisane zmiany
+                </span>
+                <span *ngIf="saveStatus === 'saving'" class="d-inline-flex align-items-center gap-1">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12 6 12 12 16 14"/>
+                  </svg>
+                  Zapisywanie...
+                </span>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-6 text-md-end mt-3 mt-md-0">
+            <button type="button" class="btn btn-outline-secondary me-2" (click)="cancel()">
+              Anuluj
+            </button>
+            <button type="button" class="btn btn-primary" (click)="saveQuestions()" [disabled]="saving || questionsForm.invalid || !hasUnsavedChanges">
+              <span *ngIf="saving" class="spinner-border spinner-border-sm me-2"></span>
+              <svg *ngIf="!saving" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                <polyline points="17 21 17 13 7 13 7 21"/>
+                <polyline points="7 3 7 8 15 8"/>
+              </svg>
+              Zapisz zmiany
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-3" *ngIf="errorMessage">
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        {{ errorMessage }}
+        <button type="button" class="btn-close" (click)="errorMessage = ''" aria-label="Close"></button>
+      </div>
+    </div>
+
+    <div class="container mt-3" *ngIf="hasResponses()">
+      <div class="alert alert-warning d-flex align-items-start" role="alert">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2 flex-shrink-0 mt-1">
+          <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+          <line x1="12" y1="9" x2="12" y2="13"/>
+          <line x1="12" y1="17" x2="12.01" y2="17"/>
+        </svg>
+        <div>
+          <strong>Ta ankieta ma już {{ survey.submission_count }} {{ survey.submission_count === 1 ? 'odpowiedź' : 'odpowiedzi' }}</strong>
+          <p class="mb-0 small">Edytuj ostrożnie - niektóre zmiany mogą wpłynąć na integralność zebranych danych.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container mt-4 pb-5">
+      <form [formGroup]="questionsForm">
+          <div formArrayName="questions">
+          
+          <div *ngFor="let question of questions.controls; let i = index" 
+               class="question-card mb-4" 
+               [id]="'question-' + i"
+               [formGroupName]="i">
+            
+            <div class="question-card-header" (click)="toggleQuestion(i)">
+              <div class="d-flex justify-content-between align-items-start">
+                <div class="flex-grow-1">
+                  <div class="d-flex align-items-center gap-2 mb-2">
+                    <span class="question-number">{{ i + 1 }}</span>
+                    <span class="answer-type-badge">
+                      
+                      {{ getAnswerTypeLabel(question.get('answer_type')?.value) }}
+                    </span>
+                    <span class="badge bg-danger" *ngIf="question.get('is_required')?.value">
+                      Wymagane
+                    </span>
+                    <span class="badge bg-warning text-dark d-inline-flex align-items-center gap-1" *ngIf="hasResponses()">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                        <line x1="12" y1="9" x2="12" y2="13"/>
+                        <line x1="12" y1="17" x2="12.01" y2="17"/>
+                      </svg>
+                      Ma odpowiedzi
+                    </span>
+                  </div>
+                  <div class="question-preview" *ngIf="!isQuestionExpanded(i)">
+                    {{ question.get('content')?.value || '(brak treści)' }}
+                  </div>
+                </div>
+                <div class="question-card-actions d-flex gap-2">
+                  <button type="button" class="btn btn-ghost btn-sm" (click)="toggleQuestion(i); $event.stopPropagation()" title="Rozwiń/Zwiń">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <polyline *ngIf="!isQuestionExpanded(i)" points="6 9 12 15 18 9"/>
+                      <polyline *ngIf="isQuestionExpanded(i)" points="18 15 12 9 6 15"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="question-card-body" *ngIf="isQuestionExpanded(i)">
+              
+              <div class="mb-3">
+                <label class="form-label fw-semibold">
+                  Treść pytania
+                  <span class="text-danger">*</span>
+                </label>
+                <textarea 
+                  class="form-control" 
+                  formControlName="content" 
+                  rows="3"
+                  placeholder="Wpisz treść pytania..."
+                  [class.is-invalid]="question.get('content')?.invalid && question.get('content')?.touched"></textarea>
+                <div class="invalid-feedback" *ngIf="question.get('content')?.invalid && question.get('content')?.touched">
+                  Treść pytania jest wymagana
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label fw-semibold">Typ odpowiedzi</label>
+                <select 
+                  class="form-select" 
+                  formControlName="answer_type"
+                  (change)="onAnswerTypeChange(i, question.get('answer_type')?.value)">
+                  <option *ngFor="let type of answerTypes" [value]="type">
+                     {{ getAnswerTypeLabel(type) }}
+                  </option>
+                </select>
+              </div>
+
+              <div *ngIf="needsChoices(question.get('answer_type')?.value)" class="mb-3">
+                <label class="form-label fw-semibold">Opcje odpowiedzi</label>
+                <div formArrayName="choices">
+                  <div *ngFor="let choice of getChoices(i).controls; let j = index" class="choice-item mb-2" [formGroupName]="j">
+                    <div class="input-group">
+                      <span class="input-group-text">{{ j + 1 }}</span>
+                      <input 
+                        type="text" 
+                        class="form-control" 
+                        formControlName="content"
+                        placeholder="Opcja {{ j + 1 }}"
+                        [class.is-invalid]="choice.get('content')?.invalid && choice.get('content')?.touched">
+                      <button 
+                        type="button" 
+                        class="btn btn-outline-danger" 
+                        (click)="removeChoice(i, j)"
+                        [disabled]="getChoices(i).length <= 2"
+                        title="Usuń opcję">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <polyline points="3 6 5 6 21 6"/>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
+                      </button>
+                    </div>
+                    <div class="invalid-feedback d-block" *ngIf="choice.get('content')?.invalid && choice.get('content')?.touched">
+                      Opcja nie może być pusta
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-outline-primary btn-sm mt-2" (click)="addChoice(i)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                    <line x1="12" y1="5" x2="12" y2="19"/>
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                  </svg>
+                  Dodaj opcję
+                </button>
+                <p class="text-muted small mt-2 mb-0">Minimalna liczba opcji: 2</p>
+              </div>
+
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" formControlName="is_required" [id]="'required-' + i">
+                <label class="form-check-label" [for]="'required-' + i">
+                  To pytanie jest wymagane
+                </label>
+              </div>
+
+              <div class="question-actions d-flex gap-2 pt-3 border-top">
+                <button type="button" class="btn btn-outline-secondary btn-sm" (click)="duplicateQuestion(i)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                  </svg>
+                  Duplikuj
+                </button>
+                <button type="button" class="btn btn-outline-danger btn-sm ms-auto" (click)="removeQuestion(i)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                    <polyline points="3 6 5 6 21 6"/>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                  </svg>
+                  Usuń pytanie
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="questions.length === 0" class="empty-state text-center py-5">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="text-muted mb-3">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <h5 class="text-muted">Brak pytań w ankiecie</h5>
+            <p class="text-muted">Dodaj pierwsze pytanie, aby rozpocząć</p>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <button type="button" class="btn btn-outline-primary btn-lg" (click)="addQuestion()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Dodaj pytanie
+          </button>
+        </div>
+        </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [class.show]="showDeleteModal" [style.display]="showDeleteModal ? 'block' : 'none'" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold">Czy na pewno usunąć pytanie?</h5>
+        <button type="button" class="btn-close" (click)="cancelDelete()"></button>
+      </div>
+      <div class="modal-body">
+        <div class="alert alert-danger d-flex align-items-start mb-3">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2 flex-shrink-0 mt-1">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          <div>
+            <strong>Ryzyko utraty danych</strong>
+            <p class="mb-0 small">To pytanie może mieć już odpowiedzi respondentów. Usunięcie pytania spowoduje trwałą utratę tych danych.</p>
+          </div>
+        </div>
+        <p class="mb-0">Czy na pewno chcesz kontynuować?</p>
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary" (click)="cancelDelete()">Anuluj</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          </svg>
+          Usuń pytanie i odpowiedzi
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop" [class.show]="showDeleteModal" [style.display]="showDeleteModal ? 'block' : 'none'"></div>

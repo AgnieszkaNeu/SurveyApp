@@ -1,0 +1,45 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3 class="brand-name">Ankietio</h3>
+        <p class="brand-tagline">Proste i bezpieczne ankiety online</p>
+      </div>
+
+      <div class="footer-links">
+        <div class="link-group">
+          <h4 class="link-group-title">Aplikacja</h4>
+          <ul>
+            <li><a routerLink="/">Strona główna</a></li>
+            <li><a routerLink="/surveys/public">Publiczne szablony</a></li>
+            <li><a routerLink="/dashboard">Panel główny</a></li>
+          </ul>
+        </div>
+
+        <div class="link-group">
+          <h4 class="link-group-title">Prawne</h4>
+          <ul>
+            <li><a routerLink="/polityka-prywatnosci">Polityka Prywatności</a></li>
+            <li><a href="#" (click)="$event.preventDefault()">Regulamin</a></li>
+            <li><a href="#" (click)="$event.preventDefault()">Polityka Cookies</a></li>
+          </ul>
+        </div>
+
+        <div class="link-group">
+          <h4 class="link-group-title">Pomoc</h4>
+          <ul>
+            <li><a href="#" (click)="$event.preventDefault()">Kontakt</a></li>
+            <li><a href="#" (click)="$event.preventDefault()">FAQ</a></li>
+            <li><a href="#" (click)="$event.preventDefault()">Dokumentacja</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="copyright">
+        © {{ currentYear }} Ankietio. Wszelkie prawa zastrzeżone.
+      </p>
+    </div>
+  </div>
+</footer>

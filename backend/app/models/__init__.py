@@ -3,7 +3,9 @@ from .choice import ChoiceCreate, ChoicePublic
 from .survey import Survey, SurveyPublic
 from .submission import Submission, SubmissionCreate, SubmissionPublic
 from .answer import Answer, AnswerCreate, AnswerPublic
-
+from .share_link import ShareLink, ShareLinkCreate, ShareLinkPublic
+from .survey_template import SurveyTemplate, SurveyTemplateCreate, SurveyTemplatePublic
+from .submission_fingerprint import SubmissionFingerprint
 Submission.model_rebuild()
 Answer.model_rebuild()
 AnswerCreate.model_rebuild()

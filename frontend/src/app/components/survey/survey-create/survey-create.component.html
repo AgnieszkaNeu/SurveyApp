@@ -1,0 +1,416 @@
+<div class="survey-create-container">
+  <div class="container mt-4 pb-5">
+    
+    <div *ngIf="currentStep === 0" class="welcome-screen">
+      <div class="row justify-content-center">
+        <div class="col-lg-10">
+          <div class="welcome-header text-center mb-5">
+            <h1 class="display-5 fw-bold mb-3">Utwórz nową ankietę</h1>
+            <p class="lead text-muted">Wybierz sposób, który najbardziej Ci odpowiada</p>
+          </div>
+
+          <div class="row g-4">
+            
+            <div class="col-md-4">
+              <div class="method-card" (click)="selectMethod('blank')">
+                <div class="method-icon">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="12" y1="11" x2="12" y2="17"/>
+                    <line x1="9" y1="14" x2="15" y2="14"/>
+                  </svg>
+                </div>
+                <h4 class="method-title">Od zera</h4>
+                <p class="method-description">Zacznij od pustej karty i zbuduj ankietę od podstaw</p>
+                <span class="method-badge">Dla zaawansowanych</span>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="method-card method-card--recommended" (click)="selectMethod('template')">
+                <div class="recommended-badge">Polecane</div>
+                <div class="method-icon">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                  </svg>
+                </div>
+                <h4 class="method-title">Z szablonu</h4>
+                <p class="method-description">Użyj gotowego szablonu i dostosuj go do swoich potrzeb</p>
+                <span class="method-badge method-badge--success">Najszybsze</span>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="method-card" (click)="selectMethod('duplicate')">
+                <div class="method-icon">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                  </svg>
+                </div>
+                <h4 class="method-title">Duplikuj istniejącą</h4>
+                <p class="method-description">Skopiuj swoją wcześniejszą ankietę</p>
+                <span class="method-badge">Oszczędź czas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="currentStep > 0" class="row justify-content-center">
+      <div class="col-lg-10">
+        
+        <div class="progress-indicator mb-4">
+          <div class="progress-dots">
+            <span class="dot" [class.dot--active]="currentStep >= 1" [class.dot--completed]="currentStep > 1"></span>
+            <span class="dot" [class.dot--active]="currentStep >= 2"></span>
+          </div>
+          <p class="progress-label text-muted text-center mt-2 mb-0">
+            {{ currentStep === 1 ? 'Nazwa ankiety' : 'Pytania' }}
+          </p>
+        </div>
+
+        <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          {{ successMessage }}
+          <button type="button" class="btn-close" (click)="successMessage = ''" aria-label="Zamknij"></button>
+        </div>
+        
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          {{ errorMessage }}
+          <button type="button" class="btn-close" (click)="errorMessage = ''" aria-label="Zamknij"></button>
+        </div>
+
+        <div *ngIf="currentStep === 1" class="step-card">
+          <div class="step-card-body">
+            <h3 class="step-title mb-4">Nadaj nazwę swojej ankiecie</h3>
+            <form [formGroup]="surveyForm" (ngSubmit)="createSurvey()">
+              <div class="mb-4">
+                <label for="name" class="form-label fw-semibold">Nazwa ankiety</label>
+                <input 
+                  type="text" 
+                  class="form-control form-control-lg" 
+                  id="name" 
+                  formControlName="name" 
+                  placeholder="np. Ankieta satysfakcji klienta"
+                  autofocus>
+                <small class="form-text text-muted d-flex align-items-center gap-1 mt-2">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="12" y1="16" x2="12" y2="12"/>
+                    <line x1="12" y1="8" x2="12.01" y2="8"/>
+                  </svg>
+                  Wybierz krótką, opisową nazwę. Będzie widoczna tylko dla Ciebie.
+                </small>
+              </div>
+
+              <div class="d-flex gap-2 justify-content-between">
+                <button type="button" class="btn btn-outline-secondary" (click)="currentStep = 0">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                    <line x1="19" y1="12" x2="5" y2="12"/>
+                    <polyline points="12 19 5 12 12 5"/>
+                  </svg>
+                  Wstecz
+                </button>
+                <button type="submit" class="btn btn-primary btn-lg" [disabled]="loading || surveyForm.invalid">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  <span *ngIf="!loading">Dalej</span>
+                  <svg *ngIf="!loading" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="ms-1">
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                    <polyline points="12 5 19 12 12 19"/>
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div *ngIf="currentStep === 2" class="step-card">
+          <div class="step-card-body">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <h3 class="step-title mb-0">Pytania ankiety</h3>
+              <span class="question-counter">{{ questions.length }} {{ questions.length === 1 ? 'pytanie' : 'pytań' }}</span>
+            </div>
+
+            <form [formGroup]="questionsForm" (ngSubmit)="saveQuestions()">
+              <div formArrayName="questions">
+                <div *ngFor="let question of questions.controls; let i = index" 
+                     class="question-card mb-4" 
+                     [formGroupName]="i">
+                  
+                  <div class="question-header">
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="d-flex align-items-center gap-2">
+                        <span class="question-number">{{ i + 1 }}</span>
+                        <span class="question-label">Pytanie</span>
+                      </div>
+                      <button 
+                        type="button" 
+                        class="btn btn-ghost btn-sm" 
+                        (click)="removeQuestion(i)" 
+                        *ngIf="questions.length > 1"
+                        title="Usuń pytanie">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                          <polyline points="3 6 5 6 21 6"/>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+
+                  <div class="question-body">
+                    <div class="mb-3">
+                      <label class="form-label fw-semibold">Treść pytania</label>
+                      <textarea 
+                        class="form-control" 
+                        formControlName="content" 
+                        rows="2" 
+                        placeholder="Wpisz pytanie..."></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                      <label class="form-label fw-semibold">Typ odpowiedzi</label>
+                      <select 
+                        class="form-select" 
+                        formControlName="answer_type" 
+                        (change)="onAnswerTypeChange(i)">
+                        <option *ngFor="let type of answerTypes" [value]="type">
+                          {{ getAnswerTypeLabel(type) }}
+                        </option>
+                      </select>
+                    </div>
+                    
+                    <div *ngIf="needsSettings(question.get('answer_type')?.value)" formGroupName="settings" class="settings-panel mb-3">
+                      <label class="form-label fw-semibold">Ustawienia</label>
+                      <div class="row g-2">
+                        <div class="col-4">
+                          <label class="form-label small">Min</label>
+                          <input type="number" class="form-control" formControlName="min">
+                        </div>
+                        <div class="col-4">
+                          <label class="form-label small">Max</label>
+                          <input type="number" class="form-control" formControlName="max">
+                        </div>
+                        <div class="col-4">
+                          <label class="form-label small">Krok</label>
+                          <input type="number" class="form-control" formControlName="step" min="1">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div *ngIf="needsChoices(question.get('answer_type')?.value)" formArrayName="choices">
+                      <label class="form-label fw-semibold">Opcje odpowiedzi</label>
+                      <div *ngFor="let choice of getChoices(i).controls; let j = index" class="choice-item mb-2" [formGroupName]="j">
+                        <div class="input-group">
+                          <span class="input-group-text">{{ j + 1 }}</span>
+                          <input type="text" class="form-control" formControlName="content" placeholder="Opcja odpowiedzi">
+                          <button 
+                            type="button" 
+                            class="btn btn-outline-danger" 
+                            (click)="removeChoice(i, j)" 
+                            *ngIf="getChoices(i).length > 2"
+                            title="Usuń opcję">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                              <line x1="18" y1="6" x2="6" y2="18"/>
+                              <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                      <button type="button" class="btn btn-outline-primary btn-sm mt-2" (click)="addChoice(i)">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                          <line x1="12" y1="5" x2="12" y2="19"/>
+                          <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Dodaj opcję
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <button type="button" class="btn btn-outline-primary btn-lg w-100 mb-4" (click)="addQuestion()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                Dodaj pytanie
+              </button>
+
+              <div class="d-flex gap-2 flex-wrap">
+                <button type="submit" class="btn btn-primary btn-lg flex-fill" [disabled]="loading || questionsForm.invalid || questions.length === 0">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  <svg *ngIf="!loading" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                    <polyline points="17 21 17 13 7 13 7 21"/>
+                    <polyline points="7 3 7 8 15 8"/>
+                  </svg>
+                  Zapisz ankietę
+                </button>
+                <button 
+                  type="button" 
+                  class="btn btn-outline-success" 
+                  (click)="openSaveAsTemplateModal()" 
+                  [disabled]="questions.length === 0">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                  </svg>
+                  Zapisz jako szablon
+                </button>
+                <button type="button" class="btn btn-outline-secondary" (click)="cancelSurveyCreation()">
+                  Anuluj
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" [class.show]="showSaveAsTemplateModal" [style.display]="showSaveAsTemplateModal ? 'block' : 'none'" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Zapisz jako szablon</h5>
+        <button type="button" class="btn-close" (click)="closeSaveAsTemplateModal()" aria-label="Close"></button>
+      </div>
+      <form [formGroup]="templateForm" (ngSubmit)="saveAsTemplate()">
+        <div class="modal-body">
+          <div class="alert alert-info small mb-3 d-flex align-items-start">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2 flex-shrink-0 mt-1">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <span>Szablon pozwala zapisać strukturę ankiety do ponownego użycia w przyszłości.</span>
+          </div>
+
+          <div class="mb-3">
+            <label for="templateName" class="form-label">Nazwa szablonu *</label>
+            <input type="text" class="form-control" id="templateName" formControlName="name" placeholder="np. Ankieta satysfakcji klienta">
+          </div>
+
+          <div class="mb-3">
+            <label for="templateDescription" class="form-label">Opis</label>
+            <textarea class="form-control" id="templateDescription" formControlName="description" rows="2" placeholder="Opcjonalny opis szablonu..."></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="templateCategory" class="form-label">Kategoria *</label>
+            <select class="form-select" id="templateCategory" formControlName="category">
+              <option [value]="TemplateCategory.FEEDBACK">Opinie</option>
+              <option [value]="TemplateCategory.QUIZ">Quiz</option>
+              <option [value]="TemplateCategory.POLL">Głosowanie</option>
+              <option [value]="TemplateCategory.RESEARCH">Badanie</option>
+              <option [value]="TemplateCategory.EVENT">Wydarzenie</option>
+              <option [value]="TemplateCategory.SATISFACTION">Satysfakcja</option>
+              <option [value]="TemplateCategory.CUSTOM">Własny</option>
+            </select>
+          </div>
+
+          <div class="alert alert-info small mb-0 d-flex align-items-center">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2 flex-shrink-0">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="12" y1="16" x2="12" y2="12"/>
+              <line x1="12" y1="8" x2="12.01" y2="8"/>
+            </svg>
+            <span>Ten szablon będzie dostępny tylko dla Ciebie.</span>
+          </div>
+
+          <div *ngIf="templateErrorMessage" class="alert alert-danger mt-3 mb-0">
+            {{ templateErrorMessage }}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeSaveAsTemplateModal()">Anuluj</button>
+          <button type="submit" class="btn btn-success" [disabled]="loading || templateForm.invalid">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+            Zapisz szablon
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop" [class.show]="showSaveAsTemplateModal" [style.display]="showSaveAsTemplateModal ? 'block' : 'none'"></div>
+
+<div class="modal" [class.show]="showCancelConfirmModal" [style.display]="showCancelConfirmModal ? 'block' : 'none'" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-warning me-2" style="vertical-align: middle;">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Anulować tworzenie ankiety?
+        </h5>
+        <button type="button" class="btn-close" (click)="closeCancelConfirmModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-0">Czy na pewno chcesz anulować? Ankieta zostanie usunięta, a wszystkie zdefiniowane pytania zostaną utracone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="closeCancelConfirmModal()">Nie, kontynuuj</button>
+        <button type="button" class="btn btn-danger" (click)="confirmCancelSurvey()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1" style="vertical-align: middle;">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+          Tak, anuluj
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop" [class.show]="showCancelConfirmModal" [style.display]="showCancelConfirmModal ? 'block' : 'none'"></div>
+
+<div class="modal" [class.show]="showNavigationConfirmModal" [style.display]="showNavigationConfirmModal ? 'block' : 'none'" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-warning me-2" style="vertical-align: middle;">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+            <line x1="12" y1="9" x2="12" y2="13"/>
+            <line x1="12" y1="17" x2="12.01" y2="17"/>
+          </svg>
+          Opuścić stronę?
+        </h5>
+        <button type="button" class="btn-close" (click)="confirmNavigation(false)"></button>
+      </div>
+      <div class="modal-body">
+        <p class="mb-0">Masz niezapisaną ankietę. Czy na pewno chcesz opuścić stronę?</p>
+        <p class="text-muted small mb-0 mt-2">Ankieta zostanie usunięta, a wszystkie zdefiniowane pytania zostaną utracone.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" (click)="confirmNavigation(false)">Nie, zostań</button>
+        <button type="button" class="btn btn-danger" (click)="confirmNavigation(true)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1" style="vertical-align: middle;">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Tak, opuść stronę
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-backdrop" [class.show]="showNavigationConfirmModal" [style.display]="showNavigationConfirmModal ? 'block' : 'none'"></div>
