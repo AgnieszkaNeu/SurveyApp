@@ -9,3 +9,4 @@ class Token(SQLModel):
 
 class TokenPayload(SQLModel):
     sub: Optional[str] = None
+    exp: Optional[int] = None
