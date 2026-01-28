@@ -6,6 +6,9 @@ from .answer import Answer, AnswerCreate, AnswerPublic
 from .share_link import ShareLink, ShareLinkCreate, ShareLinkPublic
 from .survey_template import SurveyTemplate, SurveyTemplateCreate, SurveyTemplatePublic
 from .submission_fingerprint import SubmissionFingerprint
+from .user import User
+
+User.model_rebuild()
 Submission.model_rebuild()
 Answer.model_rebuild()
 AnswerCreate.model_rebuild()
