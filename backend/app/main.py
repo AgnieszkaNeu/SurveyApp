@@ -11,16 +11,26 @@ from .core.exceptions import ApplicationException
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
-
+from contextlib import asynccontextmanager
 
 limiter = Limiter(key_func=get_remote_address)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    if settings.ENV != "test":
+        SQLModel.metadata.create_all(engine)
+    yield
+
 app = FastAPI(
     title="Ankietio API",
     description="API dla aplikacji Ankietio - system do tworzenia i wypełniania anonimowych ankiet online",
     version="1.0.0",
-    debug=True
+    debug=True,
+    lifespan=lifespan
 )
+
 app.state.limiter = limiter
+
 @app.exception_handler(RateLimitExceeded)
 async def custom_rate_limit_handler(request: Request, exc: RateLimitExceeded):
     path = request.url.path
@@ -40,6 +50,7 @@ async def custom_rate_limit_handler(request: Request, exc: RateLimitExceeded):
         status_code=429,
         content={"detail": message}
     )
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[settings.FRONTEND_URL, "http://localhost:4200"],
@@ -60,6 +71,7 @@ app.include_router(gdpr.router, prefix="/v1")
 
 def root():
     return {"message": "Witamy w Ankietio API"}
+
 @app.exception_handler(ApplicationException)
 async def application_error_handler(request: Request, e: ApplicationException):
     return JSONResponse(status_code=e.status_code, content={"message": e.message})
